@@ -2,12 +2,18 @@ import os
 from appium import webdriver
 import time
  
-apk_path=os.path.abspath(os.path.join(os.path.dirname(__file__),"..")) #获取当前项目的根路径
+#apk_path=os.path.abspath(os.path.join(os.path.dirname(__file__),"..")) #获取当前项目的根路径
  
 desired_caps={}
 desired_caps['platformName']='Android'
+
+'''
 desired_caps['platformVersion']='8.1.0'
 desired_caps['deviceName']='HFK9K19330910557'#adb devices命令输入的设置名称
+'''
+desired_caps['platformVersion']='9'
+desired_caps['deviceName'] = '0d68e2427d32'
+
 desired_caps['noReset']=True
 #测试apk包的路径
 #desired_caps['app']="D:/CODE/IM_project_net_phone/android/app/build/outputs/apk/debug/app-debug.apk" 

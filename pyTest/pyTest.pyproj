@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>778e93ad-8010-4ce2-8ed6-737f8c1d9ecc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testAppnium.py</StartupFile>
+    <StartupFile>appium\main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="appium\desired_capabilities.py" />
+    <Compile Include="appium\main.py" />
     <Compile Include="appTest.py">
       <SubType>Code</SubType>
     </Compile>
@@ -40,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="appium\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
