@@ -33,6 +33,7 @@ def reportToZK():
                 zk.create(node, value.encode('ascii'), None, True, False)
         except Exception as err:
             lxLog.getDebugLog()("reportToZK异常退出:%s", str(err))
+            zk.close()
             break
         finally:
             time.sleep(60)
@@ -48,7 +49,8 @@ def getConnections(host, port):
     #不需要建立连接
     #创建socket对象
     #SOCK_DGRAM    udp模式
-    s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    s.settimeout(10)
     #发送数据 字节
     s.sendto(str,(host, port))
     #接收返回的数据
