@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="appium\androidExample.py" />
     <Compile Include="appium\desired_capabilities.py" />
     <Compile Include="appium\main.py" />
     <Compile Include="appTest.py">

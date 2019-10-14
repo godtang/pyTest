@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-
 def get_desired_capabilities():
-    desired_caps={}
-    desired_caps['platformName']='Android'
+    desired_caps = {}
+    desired_caps['platformName'] = 'Android'
     
     #华为荣耀6P
-    desired_caps['platformVersion']='4.4.2'
+    desired_caps['platformVersion'] = '4.4.2'
     desired_caps['deviceName'] = 'F8UDU15818002253'
     desired_caps['normalName'] = u'荣耀6P'
     '''
@@ -24,22 +23,22 @@ def get_desired_capabilities():
     desired_caps['normalName'] = u'荣耀畅玩7'
     '''
 
-    desired_caps['noReset']=True
+    desired_caps['noReset'] = True
 
     #测试apk包的路径
-    #desired_caps['app']="D:/CODE/IM_project_net_phone/android/app/build/outputs/apk/debug/app-debug.apk" 
+    #desired_caps['app']="D:/CODE/IM_project_net_phone/android/app/build/outputs/apk/debug/app-debug.apk"
 
     #如果设置了apk包的路径，则不需要配appPackage和appActivity
-    desired_caps['appPackage']='com.lx.netphone'
-    desired_caps['appWaitPackage']='com.lx.netphone'
-    desired_caps['appActivity']='MainActivity'
+    desired_caps['appPackage'] = 'com.lx.netphone'
+    desired_caps['appWaitPackage'] = 'com.lx.netphone'
+    desired_caps['appActivity'] = 'MainActivity'
     
-    desired_caps['newCommandTimeout']=30
+    desired_caps['newCommandTimeout'] = 30
     if int(desired_caps['platformVersion'][0]) >= 5:
-        desired_caps['automationName']='Appium'
+        desired_caps['automationName'] = 'Appium'
     else:
-        desired_caps['automationName']='UiAutomator1'
-    desired_caps['autoGrantPermissions']=True
+        desired_caps['automationName'] = 'UiAutomator1'
+    desired_caps['autoGrantPermissions'] = True
 
     return desired_caps
 
@@ -59,7 +58,8 @@ def get_deviceInfos():
   "appActivity": "MainActivity",
   "newCommandTimeout": 30,
   "automationName": "Appium",
-  "autoGrantPermissions": True
+  "autoGrantPermissions": True,
+  "normalName": "redmi6a"
 })
     deviceInfo.append('http://localhost:4723/wd/hub')
     deviceInfos.append(deviceInfo)
@@ -74,7 +74,8 @@ def get_deviceInfos():
   "appActivity": "MainActivity",
   "newCommandTimeout": 30,
   "autoGrantPermissions": True,
-  "automationName": "UiAutomator1"
+  "automationName": "UiAutomator1",
+  "normalName": "honor6p"
 })
     deviceInfo.append('http://localhost:4723/wd/hub')
     deviceInfos.append(deviceInfo)
