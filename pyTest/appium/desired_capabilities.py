@@ -45,3 +45,32 @@ def get_desired_capabilities():
 
 def get_uri():
     return 'http://localhost:4723/wd/hub'
+
+def get_deviceInfos():
+    deviceInfos = []
+    deviceInfos.append({
+  "platformName": "Android",
+  "platformVersion": "9",
+  "deviceName": "0d68e2427d32",
+  "noReset": True,
+  "appPackage": "com.lx.netphone",
+  "appWaitPackage": "com.lx.netphone",
+  "appActivity": "MainActivity",
+  "newCommandTimeout": 30,
+  "automationName": "Appium",
+  "autoGrantPermissions": True
+})
+    deviceInfos.append({
+  "platformName": "Android",
+  "platformVersion": "4.4.2",
+  "deviceName": "F8UDU15818002253",
+  "noReset": True,
+  "appPackage": "com.lx.netphone",
+  "appWaitPackage": "com.lx.netphone",
+  "appActivity": "MainActivity",
+  "newCommandTimeout": 30,
+  "autoGrantPermissions": True,
+  "automationName": "UiAutomator1"
+})
+
+    return deviceInfos

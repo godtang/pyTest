@@ -7,9 +7,9 @@ import unittest
 import time
 import sys
 import os
+import threading
 sys.path.append("..")
 import tmjLog as lxLog
-driver = None
 
 def saveScreen(driver, e):
     baseImagePath = 'D:/CODE/pyTest/pyTest/exception/'
@@ -31,14 +31,25 @@ def setUp():
     # 获取server的地址。
     uri = desired_capabilities.get_uri()
     # 创建会话，得到driver对象，driver对象封装了所有的设备操作。下面会具体讲。
-    global driver
     driver = webdriver.Remote(uri, desired_caps)
     if None == driver:
-        return
+        return None
     else:
         lxLog.getDebugLog()('setUp ok')
+        return driver
 
-def test_getPermit():
+def initDevice(deviceInfo):
+    # 获取server的地址。
+    uri = desired_capabilities.get_uri()
+    # 创建会话，得到driver对象，driver对象封装了所有的设备操作。下面会具体讲。
+    driver = webdriver.Remote(uri, deviceInfo)
+    if None == driver:
+        return None
+    else:
+        lxLog.getDebugLog()('setUp ok')
+        return driver
+
+def test_getPermit(driver):
     lxLog.getDebugLog()('test_getPermit begin')
     while True:
         time.sleep(1)
@@ -58,7 +69,7 @@ def test_getPermit():
             break
     lxLog.getDebugLog()('test_getPermit over')
    
-def test_audioDial():  
+def test_audioDial(driver):  
     lxLog.getDebugLog()('test_audioDial begin')
     try:
         btnAudioDial = driver.find_element_by_id('com.lx.netphone:id/btn_dial')
@@ -77,7 +88,7 @@ def test_audioDial():
         print e
         saveScreen(driver, e)
    
-def test_audioAccept(): 
+def test_audioAccept(driver): 
     lxLog.getDebugLog()('test_audioAccept begin')
     try:
         btnAudioDial = driver.find_element_by_id('com.lx.netphone:id/btn_answer')
@@ -96,7 +107,7 @@ def test_audioAccept():
         print e
         saveScreen(driver, e)
    
-def test_videoDial1():  
+def test_videoDial1(driver):  
     lxLog.getDebugLog()('test_videoDial1 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoDial')
@@ -115,7 +126,7 @@ def test_videoDial1():
         print e
         saveScreen(driver, e)
    
-def test_videoDial2():  
+def test_videoDial2(driver):  
     lxLog.getDebugLog()('test_videoDial2 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoDial')
@@ -133,7 +144,7 @@ def test_videoDial2():
         print e
         saveScreen(driver, e)
    
-def test_videoAccept1():  
+def test_videoAccept1(driver):  
     lxLog.getDebugLog()('test_videoAccept1 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoAnswer')
@@ -152,7 +163,7 @@ def test_videoAccept1():
         print e
         saveScreen(driver, e)
    
-def test_videoAccept2():  
+def test_videoAccept2(driver):  
     lxLog.getDebugLog()('test_videoAccept2 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoAnswer')
@@ -170,19 +181,45 @@ def test_videoAccept2():
         print e
         saveScreen(driver, e)
 
-def tearDown(): 
+def tearDown(driver): 
     lxLog.getDebugLog()('tearDown')
     # 测试结束，退出会话。 
     driver.quit()
 
-if __name__ == '__main__':
-    setUp()
-    test_getPermit()
-    test_audioDial()
-    test_audioAccept()
-    test_videoDial1()
-    test_videoAccept1()
-    test_videoDial2()
-    test_videoAccept2()
-    tearDown()
+class testThread (threading.Thread):   #继承父类threading.Thread
+    def __init__(self, threadID, deviceInfo):
+        threading.Thread.__init__(self)
+        self.threadID = str(threadID)
+        self.deviceInfo = deviceInfo
+    def run(self):                   #把要执行的代码写到run函数里面 线程在创建后会直接运行run函数 
+        lxLog.getDebugLog()("Starting " + self.threadID)
+        driver = initDevice(self.deviceInfo)
+        if None == driver:
+            lxLog.getDebugLog()("程序初始化失败，请检查程序安装和首次调用")
+        else:
+            test_getPermit(driver)
+            test_audioDial(driver)
+            test_audioAccept(driver)
+            test_videoDial1(driver)
+            test_videoAccept1(driver)
+            test_videoDial2(driver)
+            test_videoAccept2(driver)
+            tearDown(driver)
+        lxLog.getDebugLog()("Exiting " + self.threadID)
 
+if __name__ == '__main__':
+    deviceInfos = desired_capabilities.get_deviceInfos()
+    threads = []
+    index = 0
+    for deviceInfo in deviceInfos:
+        index = index + 1
+        # 创建新线程
+        thread = testThread(index, deviceInfo)
+        # 开启新线程
+        thread.start()
+        threads.append(thread)
+    # 等待所有线程完成
+    for t in threads:
+        t.join()
+    print "Exiting Main Thread"
+    
