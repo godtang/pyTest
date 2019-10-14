@@ -35,22 +35,20 @@ def setUp():
     if None == driver:
         return None
     else:
-        lxLog.getDebugLog()('setUp ok')
+        lxLog.getDebugLog()(u'setUp ok')
         return driver
 
 def initDevice(deviceInfo):
-    # 获取server的地址。
-    uri = desired_capabilities.get_uri()
     # 创建会话，得到driver对象，driver对象封装了所有的设备操作。下面会具体讲。
-    driver = webdriver.Remote(uri, deviceInfo)
+    driver = webdriver.Remote(deviceInfo[1], deviceInfo[0])
     if None == driver:
         return None
     else:
-        lxLog.getDebugLog()('setUp ok')
+        lxLog.getDebugLog()(u'setUp ok')
         return driver
 
 def test_getPermit(driver):
-    lxLog.getDebugLog()('test_getPermit begin')
+    lxLog.getDebugLog()(u'test_getPermit begin')
     while True:
         time.sleep(1)
         try:
@@ -67,122 +65,146 @@ def test_getPermit(driver):
             print e
             saveScreen(driver, e)
             break
-    lxLog.getDebugLog()('test_getPermit over')
+    lxLog.getDebugLog()(u'test_getPermit over')
    
 def test_audioDial(driver):  
-    lxLog.getDebugLog()('test_audioDial begin')
+    lxLog.getDebugLog()(u'test_audioDial begin')
     try:
         btnAudioDial = driver.find_element_by_id('com.lx.netphone:id/btn_dial')
+        lxLog.getDebugLog()(u'test_audioDial 语音拨号')
         btnAudioDial.click()
         time.sleep(3)
         btnAudioMute = driver.find_element_by_id('com.lx.netphone:id/button_audio_mute')
         btnAudioMute.click()
+        lxLog.getDebugLog()(u'test_audioDial 禁用麦克风')
         time.sleep(3)
         btnAudioSpeaker = driver.find_element_by_id('com.lx.netphone:id/button_audio_speaker')
         btnAudioSpeaker.click()
+        lxLog.getDebugLog()(u'test_audioDial 使用外放')
         time.sleep(3)
         btnAudioHangup = driver.find_element_by_id('com.lx.netphone:id/button_audio_hang_up')
         btnAudioHangup.click()
+        lxLog.getDebugLog()(u'test_audioDial 语音挂断')
         time.sleep(3)
     except Exception as e:
         print e
         saveScreen(driver, e)
    
 def test_audioAccept(driver): 
-    lxLog.getDebugLog()('test_audioAccept begin')
+    lxLog.getDebugLog()(u'test_audioAccept begin')
     try:
         btnAudioDial = driver.find_element_by_id('com.lx.netphone:id/btn_answer')
         btnAudioDial.click()
+        lxLog.getDebugLog()(u'test_audioAccept 语音接听')
         time.sleep(3)
         btnAudioMute = driver.find_element_by_id('com.lx.netphone:id/button_audio_mute')
         btnAudioMute.click()
+        lxLog.getDebugLog()(u'test_audioAccept 禁用麦克风')
         time.sleep(3)
         btnAudioSpeaker = driver.find_element_by_id('com.lx.netphone:id/button_audio_speaker')
         btnAudioSpeaker.click()
+        lxLog.getDebugLog()(u'test_audioAccept 使用外放')
         time.sleep(3)
         btnAudioHangup = driver.find_element_by_id('com.lx.netphone:id/button_audio_hang_up')
         btnAudioHangup.click()
+        lxLog.getDebugLog()(u'test_audioAccept 语音挂断')
         time.sleep(3)
     except Exception as e:
         print e
         saveScreen(driver, e)
    
 def test_videoDial1(driver):  
-    lxLog.getDebugLog()('test_videoDial1 begin')
+    lxLog.getDebugLog()(u'test_videoDial1 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoDial')
         btnVideoDial.click()
+        lxLog.getDebugLog()(u'test_videoDial1 视频拨号')
         time.sleep(3)
         btnVideoSwitchCamera = driver.find_element_by_id('com.lx.netphone:id/video_image_change_camera')
         btnVideoSwitchCamera.click()
+        lxLog.getDebugLog()(u'test_videoDial1 切换摄像头')
         time.sleep(3)
         btnVideoSwitchToAudio = driver.find_element_by_id('com.lx.netphone:id/video_image_change_voice_call')
         btnVideoSwitchToAudio.click()
+        lxLog.getDebugLog()(u'test_videoDial1 视频转语音')
         time.sleep(3)
         btnAudioHangup = driver.find_element_by_id('com.lx.netphone:id/button_audio_hang_up')
         btnAudioHangup.click()
+        lxLog.getDebugLog()(u'test_videoDial1 语音挂断')
         time.sleep(3)
     except Exception as e:
         print e
         saveScreen(driver, e)
    
 def test_videoDial2(driver):  
-    lxLog.getDebugLog()('test_videoDial2 begin')
+    lxLog.getDebugLog()(u'test_videoDial2 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoDial')
         btnVideoDial.click()
+        lxLog.getDebugLog()(u'test_videoDial2 视频接听')
         time.sleep(3)
         btnVideoSwitchCamera = driver.find_element_by_id('com.lx.netphone:id/video_image_change_camera')
         btnVideoSwitchCamera.click()
+        lxLog.getDebugLog()(u'test_videoDial2 切换摄像头1')
         time.sleep(3)
         btnVideoSwitchCamera.click()
+        lxLog.getDebugLog()(u'test_videoDial2 切换摄像头2')
         time.sleep(3)
         btnVideoHangup = driver.find_element_by_id('com.lx.netphone:id/video_image_hang_up')
         btnVideoHangup.click()
+        lxLog.getDebugLog()(u'test_videoDial2 视频挂断')
         time.sleep(3)
     except Exception as e:
         print e
         saveScreen(driver, e)
    
 def test_videoAccept1(driver):  
-    lxLog.getDebugLog()('test_videoAccept1 begin')
+    lxLog.getDebugLog()(u'test_videoAccept1 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoAnswer')
         btnVideoDial.click()
+        lxLog.getDebugLog()(u'test_videoAccept1 视频接听')
         time.sleep(3)
         btnVideoSwitchCamera = driver.find_element_by_id('com.lx.netphone:id/video_image_change_camera')
         btnVideoSwitchCamera.click()
+        lxLog.getDebugLog()(u'test_videoAccept1 切换摄像头')
         time.sleep(3)
         btnVideoSwitchToAudio = driver.find_element_by_id('com.lx.netphone:id/video_image_change_voice_call')
         btnVideoSwitchToAudio.click()
+        lxLog.getDebugLog()(u'test_videoAccept1 视频转语音')
         time.sleep(3)
         btnAudioHangup = driver.find_element_by_id('com.lx.netphone:id/button_audio_hang_up')
         btnAudioHangup.click()
+        lxLog.getDebugLog()(u'test_videoAccept1 视频挂断')
         time.sleep(3)
     except Exception as e:
         print e
         saveScreen(driver, e)
    
 def test_videoAccept2(driver):  
-    lxLog.getDebugLog()('test_videoAccept2 begin')
+    lxLog.getDebugLog()(u'test_videoAccept2 begin')
     try:
         btnVideoDial = driver.find_element_by_id('com.lx.netphone:id/btn_videoAnswer')
         btnVideoDial.click()
+        lxLog.getDebugLog()(u'test_videoAccept2 视频接听')
         time.sleep(3)
         btnVideoSwitchCamera = driver.find_element_by_id('com.lx.netphone:id/video_image_change_camera')
         btnVideoSwitchCamera.click()
+        lxLog.getDebugLog()(u'test_videoAccept2 切换摄像头1')
         time.sleep(3)
         btnVideoSwitchCamera.click()
+        lxLog.getDebugLog()(u'test_videoAccept2 切换摄像头2')
         time.sleep(3)
         btnVideoHangup = driver.find_element_by_id('com.lx.netphone:id/video_image_hang_up')
         btnVideoHangup.click()
+        lxLog.getDebugLog()(u'test_videoAccept2 视频挂断')
         time.sleep(3)
     except Exception as e:
         print e
         saveScreen(driver, e)
 
 def tearDown(driver): 
-    lxLog.getDebugLog()('tearDown')
+    lxLog.getDebugLog()(u'tearDown')
     # 测试结束，退出会话。 
     driver.quit()
 
@@ -191,21 +213,22 @@ class testThread (threading.Thread):   #继承父类threading.Thread
         threading.Thread.__init__(self)
         self.threadID = str(threadID)
         self.deviceInfo = deviceInfo
-    def run(self):                   #把要执行的代码写到run函数里面 线程在创建后会直接运行run函数 
-        lxLog.getDebugLog()("Starting " + self.threadID)
-        driver = initDevice(self.deviceInfo)
-        if None == driver:
-            lxLog.getDebugLog()("程序初始化失败，请检查程序安装和首次调用")
-        else:
-            test_getPermit(driver)
-            test_audioDial(driver)
-            test_audioAccept(driver)
-            test_videoDial1(driver)
-            test_videoAccept1(driver)
-            test_videoDial2(driver)
-            test_videoAccept2(driver)
-            tearDown(driver)
-        lxLog.getDebugLog()("Exiting " + self.threadID)
+    def run(self):
+        while True:
+            lxLog.getDebugLog()("Starting " + self.threadID)
+            driver = initDevice(self.deviceInfo)
+            if None == driver:
+                lxLog.getDebugLog()("程序初始化失败，请检查程序安装和首次调用")
+            else:
+                test_getPermit(driver)
+                test_audioDial(driver)
+                test_audioAccept(driver)
+                test_videoDial1(driver)
+                test_videoAccept1(driver)
+                test_videoDial2(driver)
+                test_videoAccept2(driver)
+                tearDown(driver)
+            lxLog.getDebugLog()("Exiting " + self.threadID)
 
 if __name__ == '__main__':
     deviceInfos = desired_capabilities.get_deviceInfos()

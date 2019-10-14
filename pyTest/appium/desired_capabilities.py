@@ -48,7 +48,8 @@ def get_uri():
 
 def get_deviceInfos():
     deviceInfos = []
-    deviceInfos.append({
+    deviceInfo = []
+    deviceInfo.append({
   "platformName": "Android",
   "platformVersion": "9",
   "deviceName": "0d68e2427d32",
@@ -60,7 +61,10 @@ def get_deviceInfos():
   "automationName": "Appium",
   "autoGrantPermissions": True
 })
-    deviceInfos.append({
+    deviceInfo.append('http://localhost:4723/wd/hub')
+    deviceInfos.append(deviceInfo)
+    deviceInfo = []
+    deviceInfo.append({
   "platformName": "Android",
   "platformVersion": "4.4.2",
   "deviceName": "F8UDU15818002253",
@@ -72,5 +76,7 @@ def get_deviceInfos():
   "autoGrantPermissions": True,
   "automationName": "UiAutomator1"
 })
+    deviceInfo.append('http://localhost:4723/wd/hub')
+    deviceInfos.append(deviceInfo)
 
     return deviceInfos
