@@ -4,12 +4,20 @@
 def get_desired_capabilities():
     desired_caps={}
     desired_caps['platformName']='Android'
-
-    desired_caps['platformVersion']='8.1.0'
-    desired_caps['deviceName']='HFK9K19330910557'#adb devices命令输入的设置名称
+    
+    #华为荣耀6P
+    desired_caps['platformVersion']='4.4.2'
+    desired_caps['deviceName'] = 'F8UDU15818002253'
     '''
+    #华为荣耀X1
+    desired_caps['platformVersion']='4.4'
+    desired_caps['deviceName'] = 'T7K6R14B01000626'
+    #小米NOTE6A
     desired_caps['platformVersion']='9'
     desired_caps['deviceName'] = '0d68e2427d32'
+    #华为荣耀畅玩7
+    desired_caps['platformVersion']='8.1.0'
+    desired_caps['deviceName']='HFK9K19330910557'
     '''
 
     desired_caps['noReset']=True
@@ -23,7 +31,11 @@ def get_desired_capabilities():
     desired_caps['appActivity']='MainActivity'
     
     desired_caps['newCommandTimeout']=30
-    desired_caps['automationName']='Appium'
+    if int(desired_caps['platformVersion'][0]) >= 5:
+        desired_caps['automationName']='Appium'
+    else:
+        desired_caps['automationName']='UiAutomator1'
+    desired_caps['autoGrantPermissions']=True
 
     return desired_caps
 

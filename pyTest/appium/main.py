@@ -31,7 +31,7 @@ def test_getPermit():
             for permit in permits:
                 if -1 != permit.text.find(u'允许'):
                     permit.click()
-                    ifFind = True
+                    isFind = True
                     break
             if False == isFind:
                 break
