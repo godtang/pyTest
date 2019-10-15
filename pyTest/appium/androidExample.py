@@ -14,8 +14,7 @@ import tmjLog as lxLog
 class androidExample(object):
     def saveScreen(self, driver, e):
         baseImagePath = 'D:/CODE/pyTest/pyTest/exception/'
-        desired_caps = desired_capabilities.get_desired_capabilities()
-        phone = desired_caps['normalName']
+        phone = self.deviceInfo[0]['normalName']
         currentTime = time.strftime("%Y%m%d%H%M%S", time.localtime())
         saveFile = baseImagePath + phone
         mkdirlambda = lambda x: os.makedirs(x) if not os.path.exists(x)  else True
@@ -26,19 +25,6 @@ class androidExample(object):
             saveFile, exc_tb.tb_frame.f_code.co_filename, exc_tb.tb_lineno, str(e))
         self.myLog(msg)
         driver.get_screenshot_as_file(saveFile)
-
-    def setUp():
-        # 获取我们设定的capabilities，通知Appium Server创建相应的会话。
-        desired_caps = desired_capabilities.get_desired_capabilities()
-        # 获取server的地址。
-        uri = desired_capabilities.get_uri()
-        # 创建会话，得到driver对象，driver对象封装了所有的设备操作。下面会具体讲。
-        driver = webdriver.Remote(uri, desired_caps)
-        if None == driver:
-            return None
-        else:
-            self.myLog(u'setUp ok')
-            return driver
 
     def initDevice(self, deviceInfo):
         # 创建会话，得到driver对象，driver对象封装了所有的设备操作。下面会具体讲。
