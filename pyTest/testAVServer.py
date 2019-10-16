@@ -8,10 +8,10 @@ from time import sleep
 from kazoo.client import KazooClient
 from kazoo.client import KazooState
 
-avHost = "47.110.127.165"
+avHost = "120.79.16.27"
 avPort = 20000
 nodePath = "/im_base/Video/"
-zkHost = "192.168.3.22"
+zkHost = "47.96.77.187"
 zkPort = "2181"
 #publicIP = '192.168.3.24' #以上报的服务器为准
 maxBandwidth = 4096
@@ -23,16 +23,17 @@ def reportToZK():
     node = nodePath + avHost
     while True:
         try:
+            lxLog.getDebugLog()(u"往%s:%d取数据", avHost, avPort)
             audioSize, videoSize = getConnections(avHost, avPort)
             currentTime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
             value = avHost + ':' + str(avPort) + '|' + str(audioSize) + '|' + str(videoSize) + '|' + str(maxBandwidth) + '|' + currentTime
-            lxLog.getDebugLog()("上报数据:%s", value)
+            lxLog.getDebugLog()(u"往%s:%s上报数据:%s", zkHost, zkPort, value)
             if zk.exists(node):
                 zk.set(node, value.encode('ascii'))
             else:
                 zk.create(node, value.encode('ascii'), None, True, False)
         except Exception as err:
-            lxLog.getDebugLog()("reportToZK异常退出:%s", str(err))
+            lxLog.getDebugLog()(u"reportToZK异常退出:%s", str(err))
             zk.close()
             break
         finally:
@@ -67,8 +68,8 @@ if __name__ == '__main__':
     while True:
         try:
             reportToZK()
-        except Exception as e:
-            lxLog.getDebugLog()("main异常退出:%s", str(err))
+        except Exception as err:
+            lxLog.getDebugLog()(u"main异常退出:%s", str(err))
         finally:
             time.sleep(5)
 
