@@ -20,7 +20,13 @@ class testThread(threading.Thread):   #继承父类threading.Thread
     def run(self):
         example = androidExample(self.deviceInfo)
         while True:
-            example.runTest()
+            try:
+                example.runTest()                
+            except Exception as e:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                msg = unicode.format(u"saveScreen\n截图：{}\n错误文件:{}:{}\n错误原因:{}", \
+                    saveFile, exc_tb.tb_frame.f_code.co_filename, exc_tb.tb_lineno, str(e))
+                lxLog.getDebugLog()(msg)
 
 if __name__ == '__main__':
     deviceInfos = desired_capabilities.get_deviceInfos()

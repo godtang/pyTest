@@ -63,7 +63,8 @@ def get_deviceInfos():
 })
     deviceInfo.append('http://localhost:4723/wd/hub')
     deviceInfos.append(deviceInfo)
-    deviceInfo = []
+
+    '''deviceInfo = []
     deviceInfo.append({
   "platformName": "Android",
   "platformVersion": "4.4.2",
@@ -79,5 +80,39 @@ def get_deviceInfos():
 })
     deviceInfo.append('http://localhost:4723/wd/hub')
     deviceInfos.append(deviceInfo)
+
+    deviceInfo = []
+    deviceInfo.append({
+  "platformName": "Android",
+  "platformVersion": "4.4.2",
+  "deviceName": "T7K6R14B01000626",
+  "noReset": True,
+  "appPackage": "com.lx.netphone",
+  "appWaitPackage": "com.lx.netphone",
+  "appActivity": "MainActivity",
+  "newCommandTimeout": 30,
+  "autoGrantPermissions": True,
+  "automationName": "UiAutomator1",
+  "normalName": "honorx1"
+})
+    deviceInfo.append('http://localhost:4723/wd/hub')
+    deviceInfos.append(deviceInfo)
+
+    deviceInfo = []
+    deviceInfo.append({
+  "platformName": "Android",
+  "platformVersion": "8.1.0",
+  "deviceName": "HFK9K19330910557",
+  "noReset": True,
+  "appPackage": "com.lx.netphone",
+  "appWaitPackage": "com.lx.netphone",
+  "appActivity": "MainActivity",
+  "newCommandTimeout": 30,
+  "autoGrantPermissions": True,
+  "automationName": "Appium",
+  "normalName": "honor7"
+})
+    deviceInfo.append('http://localhost:4723/wd/hub')
+    deviceInfos.append(deviceInfo)'''
 
     return deviceInfos
