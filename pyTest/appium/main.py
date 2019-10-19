@@ -9,6 +9,7 @@ import sys
 import os
 import threading
 from androidExample import androidExample
+from iOSExample import iOSExample
 sys.path.append("..")
 import tmjLog as lxLog
 
@@ -18,15 +19,20 @@ class testThread(threading.Thread):   #继承父类threading.Thread
         self.threadID = str(threadID)
         self.deviceInfo = deviceInfo
     def run(self):
-        example = androidExample(self.deviceInfo)
+        if "Android" == self.deviceInfo[0]['platformName']:
+            example = androidExample(self.deviceInfo)
+        else:
+            example = iOSExample(self.deviceInfo)
         while True:
             try:
                 example.runTest()                
             except Exception as e:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
-                msg = unicode.format(u"saveScreen\n截图：{}\n错误文件:{}:{}\n错误原因:{}", \
-                    saveFile, exc_tb.tb_frame.f_code.co_filename, exc_tb.tb_lineno, str(e))
+                msg = unicode.format(u"错误文件:{}:{}\n错误原因:{}", \
+                    exc_tb.tb_frame.f_code.co_filename, exc_tb.tb_lineno, str(e))
                 lxLog.getDebugLog()(msg)
+            finally:
+                time.sleep(1)
 
 if __name__ == '__main__':
     deviceInfos = desired_capabilities.get_deviceInfos()

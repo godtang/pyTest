@@ -46,9 +46,9 @@ def get_uri():
     return 'http://localhost:4723/wd/hub'
 
 def get_deviceInfos():
-    deviceInfos = []
-    deviceInfo = []
-    deviceInfo.append({
+    deviceInfoList = []
+    deviceInfoRedmi6A = []
+    deviceInfoRedmi6A.append({
   "platformName": "Android",
   "platformVersion": "9",
   "deviceName": "0d68e2427d32",
@@ -61,11 +61,10 @@ def get_deviceInfos():
   "autoGrantPermissions": True,
   "normalName": "redmi6a"
 })
-    deviceInfo.append('http://localhost:4723/wd/hub')
-    deviceInfos.append(deviceInfo)
+    deviceInfoRedmi6A.append('http://localhost:4723/wd/hub')
 
-    '''deviceInfo = []
-    deviceInfo.append({
+    deviceInfoHonor6P = []
+    deviceInfoHonor6P.append({
   "platformName": "Android",
   "platformVersion": "4.4.2",
   "deviceName": "F8UDU15818002253",
@@ -78,11 +77,10 @@ def get_deviceInfos():
   "automationName": "UiAutomator1",
   "normalName": "honor6p"
 })
-    deviceInfo.append('http://localhost:4723/wd/hub')
-    deviceInfos.append(deviceInfo)
+    deviceInfoHonor6P.append('http://localhost:4723/wd/hub')
 
-    deviceInfo = []
-    deviceInfo.append({
+    deviceInfoHonorX1 = []
+    deviceInfoHonorX1.append({
   "platformName": "Android",
   "platformVersion": "4.4.2",
   "deviceName": "T7K6R14B01000626",
@@ -95,11 +93,10 @@ def get_deviceInfos():
   "automationName": "UiAutomator1",
   "normalName": "honorx1"
 })
-    deviceInfo.append('http://localhost:4723/wd/hub')
-    deviceInfos.append(deviceInfo)
+    deviceInfoHonorX1.append('http://192.168.3.76:4723/wd/hub')
 
-    deviceInfo = []
-    deviceInfo.append({
+    deviceInfoHonor7 = []
+    deviceInfoHonor7.append({
   "platformName": "Android",
   "platformVersion": "8.1.0",
   "deviceName": "HFK9K19330910557",
@@ -112,7 +109,25 @@ def get_deviceInfos():
   "automationName": "Appium",
   "normalName": "honor7"
 })
-    deviceInfo.append('http://localhost:4723/wd/hub')
-    deviceInfos.append(deviceInfo)'''
+    deviceInfoHonor7.append('http://localhost:4723/wd/hub')
 
-    return deviceInfos
+    deviceInfoIPhone6P = []
+    deviceInfoIPhone6P.append({
+  "automationName": "XCUITest",
+  "platformName": "iOS",
+  "platformVersion": "12.4.1",
+  "deviceName": "iPhone 6 Plus",
+  "bundleId": "com.lx.NtePhone",
+  "udid": "5946f3c3d63f7a1455f18f4612c8ff26c9b5f033",
+  "normalName": "iPhone6Plus"
+})
+    deviceInfoIPhone6P.append('http://192.168.3.76:4723/wd/hub')
+
+
+    #deviceInfoList.append(deviceInfoRedmi6A)
+    #deviceInfoList.append(deviceInfoHonor6P)
+    deviceInfoList.append(deviceInfoHonorX1)
+    #deviceInfoList.append(deviceInfoHonor7)
+    deviceInfoList.append(deviceInfoIPhone6P)
+
+    return deviceInfoList
