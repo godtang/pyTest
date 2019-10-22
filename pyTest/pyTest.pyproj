@@ -24,6 +24,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="appium\androidExample.py" />
+    <Compile Include="appium\androidLX2.py" />
     <Compile Include="appium\desired_capabilities.py" />
     <Compile Include="appium\iOSExample.py" />
     <Compile Include="appium\main.py" />

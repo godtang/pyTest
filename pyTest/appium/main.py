@@ -9,6 +9,7 @@ import sys
 import os
 import threading
 from androidExample import androidExample
+from androidLX2 import androidLX2
 from iOSExample import iOSExample
 sys.path.append("..")
 import tmjLog as lxLog
@@ -20,7 +21,7 @@ class testThread(threading.Thread):   #继承父类threading.Thread
         self.deviceInfo = deviceInfo
     def run(self):
         if "Android" == self.deviceInfo[0]['platformName']:
-            example = androidExample(self.deviceInfo)
+            example = androidLX2(self.deviceInfo)
         else:
             example = iOSExample(self.deviceInfo)
         while True:

@@ -123,11 +123,27 @@ def get_deviceInfos():
 })
     deviceInfoIPhone6P.append('http://192.168.3.76:4723/wd/hub')
 
+    deviceInfoRedmi6A_chat = []
+    deviceInfoRedmi6A_chat.append({
+  "platformName": "Android",
+  "platformVersion": "9",
+  "deviceName": "0d68e2427d32",
+  "noReset": True,
+  "appPackage": "com.lx.chat",
+  "appActivity": "com.lx.longxin2.main.main.ui.LoginActivity",
+  "newCommandTimeout": 30,
+  "automationName": "Appium",
+  "autoGrantPermissions": True,
+  "normalName": "redmi6a"
+})
+    deviceInfoRedmi6A_chat.append('http://localhost:4723/wd/hub')
+
 
     #deviceInfoList.append(deviceInfoRedmi6A)
     #deviceInfoList.append(deviceInfoHonor6P)
-    deviceInfoList.append(deviceInfoHonorX1)
+    #deviceInfoList.append(deviceInfoHonorX1)
     #deviceInfoList.append(deviceInfoHonor7)
-    deviceInfoList.append(deviceInfoIPhone6P)
+    #deviceInfoList.append(deviceInfoIPhone6P)
+    deviceInfoList.append(deviceInfoRedmi6A_chat)
 
     return deviceInfoList
