@@ -130,7 +130,7 @@ def get_deviceInfos():
   "deviceName": "0d68e2427d32",
   "noReset": True,
   "appPackage": "com.lx.chat",
-  "appActivity": "com.lx.longxin2.main.main.ui.LoginActivity",
+  "appActivity": "com.lx.longxin2.main.main.ui.SplashActivity",
   "newCommandTimeout": 30,
   "automationName": "Appium",
   "autoGrantPermissions": True,
@@ -138,12 +138,46 @@ def get_deviceInfos():
 })
     deviceInfoRedmi6A_chat.append('http://localhost:4723/wd/hub')
 
+    deviceInfoRedmi6A_chatInstall = []
+    deviceInfoRedmi6A_chatInstall.append({
+  "platformName": "Android",
+  "platformVersion": "9",
+  "deviceName": "0d68e2427d32",
+  "noReset": True,
+  "app": "D:/CODE/IM_project_net_phone/android/app/build/outputs/apk/debug/app-debug.apk",
+  "appPackage": "com.lx.netphone",
+  "appWaitPackage": "com.lx.netphone",
+  "appActivity": "MainActivity",
+  "newCommandTimeout": 30,
+  "automationName": "Appium",
+  "autoGrantPermissions": True,
+  "normalName": "redmi6a"
+})
+    deviceInfoRedmi6A_chatInstall.append('http://localhost:4723/wd/hub')
+
+    deviceInfoHonor6P_lx = []
+    deviceInfoHonor6P_lx.append({
+  "platformName": "Android",
+  "platformVersion": "4.4.2",
+  "deviceName": "F8UDU15818002253",
+  "noReset": True,
+  "appPackage": "com.lx.chat",
+  "appWaitPackage": "com.lx.chat",
+  "appActivity": "com.lx.longxin2.main.main.ui.SplashActivity",
+  "newCommandTimeout": 30,
+  "autoGrantPermissions": True,
+  "automationName": "UiAutomator1",
+  "normalName": "honor6p"
+})
+    deviceInfoHonor6P_lx.append('http://localhost:4723/wd/hub')
+
 
     #deviceInfoList.append(deviceInfoRedmi6A)
     #deviceInfoList.append(deviceInfoHonor6P)
     #deviceInfoList.append(deviceInfoHonorX1)
     #deviceInfoList.append(deviceInfoHonor7)
     #deviceInfoList.append(deviceInfoIPhone6P)
-    deviceInfoList.append(deviceInfoRedmi6A_chat)
+    #deviceInfoList.append(deviceInfoRedmi6A_chat)
+    deviceInfoList.append(deviceInfoHonor6P_lx)
 
     return deviceInfoList

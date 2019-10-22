@@ -33,7 +33,7 @@ class testThread(threading.Thread):   #继承父类threading.Thread
                     exc_tb.tb_frame.f_code.co_filename, exc_tb.tb_lineno, str(e))
                 lxLog.getDebugLog()(msg)
             finally:
-                time.sleep(1)
+                time.sleep(10)
 
 if __name__ == '__main__':
     deviceInfos = desired_capabilities.get_deviceInfos()
