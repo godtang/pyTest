@@ -11,6 +11,7 @@ import threading
 from androidExample import androidExample
 from androidLX2 import androidLX2
 from iOSExample import iOSExample
+from iOSLX2 import iOSLX2
 sys.path.append("..")
 import tmjLog as lxLog
 
@@ -23,7 +24,7 @@ class testThread(threading.Thread):   #继承父类threading.Thread
         if "Android" == self.deviceInfo[0]['platformName']:
             example = androidLX2(self.deviceInfo)
         else:
-            example = iOSExample(self.deviceInfo)
+            example = iOSLX2(self.deviceInfo)
         while True:
             try:
                 example.runTest()                

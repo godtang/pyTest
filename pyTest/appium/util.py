@@ -3,6 +3,7 @@
 
 import random
 
+
 def getRandomString(type, length):
     result = ''
     availableLetter = ''

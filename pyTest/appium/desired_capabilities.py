@@ -121,7 +121,7 @@ def get_deviceInfos():
   "udid": "5946f3c3d63f7a1455f18f4612c8ff26c9b5f033",
   "normalName": "iPhone6Plus"
 })
-    deviceInfoIPhone6P.append('http://192.168.3.76:4723/wd/hub')
+    deviceInfoIPhone6P.append('http://192.168.3.81:4723/wd/hub')
 
     deviceInfoRedmi6A_chat = []
     deviceInfoRedmi6A_chat.append({
@@ -171,6 +171,18 @@ def get_deviceInfos():
 })
     deviceInfoHonor6P_lx.append('http://localhost:4723/wd/hub')
 
+    deviceInfoIPhone6P_lx = []
+    deviceInfoIPhone6P_lx.append({
+  "automationName": "XCUITest",
+  "platformName": "iOS",
+  "platformVersion": "12.4.1",
+  "deviceName": "iPhone 6 Plus",
+  "bundleId": "com.laixun.longxins",
+  "udid": "5946f3c3d63f7a1455f18f4612c8ff26c9b5f033",
+  "normalName": "iPhone6Plus"
+})
+    deviceInfoIPhone6P_lx.append('http://192.168.3.81:4723/wd/hub')
+
 
     #deviceInfoList.append(deviceInfoRedmi6A)
     #deviceInfoList.append(deviceInfoHonor6P)
@@ -178,6 +190,6 @@ def get_deviceInfos():
     #deviceInfoList.append(deviceInfoHonor7)
     #deviceInfoList.append(deviceInfoIPhone6P)
     #deviceInfoList.append(deviceInfoRedmi6A_chat)
-    deviceInfoList.append(deviceInfoHonor6P_lx)
+    deviceInfoList.append(deviceInfoIPhone6P_lx)
 
     return deviceInfoList

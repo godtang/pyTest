@@ -27,6 +27,7 @@
     <Compile Include="appium\androidLX2.py" />
     <Compile Include="appium\desired_capabilities.py" />
     <Compile Include="appium\iOSExample.py" />
+    <Compile Include="appium\iOSLX2.py" />
     <Compile Include="appium\main.py" />
     <Compile Include="appium\util.py" />
     <Compile Include="appTest.py">
