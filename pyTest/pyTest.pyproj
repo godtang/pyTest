@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>778e93ad-8010-4ce2-8ed6-737f8c1d9ecc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>appium\main.py</StartupFile>
+    <StartupFile>appLogin.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,9 +30,11 @@
     <Compile Include="appium\iOSLX2.py" />
     <Compile Include="appium\main.py" />
     <Compile Include="appium\util.py" />
+    <Compile Include="appLogin.py" />
     <Compile Include="appTest.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="compileProtobuf.py" />
     <Compile Include="pyTest.py" />
     <Compile Include="testAppnium.py">
       <SubType>Code</SubType>

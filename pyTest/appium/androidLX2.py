@@ -87,7 +87,7 @@ class androidLX2(object):
             time.sleep(3)
             driver.find_element_by_id('com.lx.chat:id/sign_btn_login').click()
             time.sleep(3)
-            driver.find_element_by_id('com.lx.chat:id/sign_verify_code').send_keys(util.getRandomString(1, 6))
+            driver.find_element_by_id('com.lx.chat:id/sign_verify_code').send_keys(util.getRandomString(1, 4))
             driver.hide_keyboard()
             time.sleep(3)
             driver.find_element_by_id('com.lx.chat:id/sign_et_nick').send_keys(phone)
@@ -104,7 +104,7 @@ class androidLX2(object):
             time.sleep(3)
             #2.输入随机密码
             driver.find_element_by_id('com.lx.chat:id/sign_et_num').clear()
-            password = util.getRandomString(2, 8)
+            password = util.getRandomString(2, 16)
             driver.find_element_by_id('com.lx.chat:id/sign_et_num').send_keys(password)
             driver.hide_keyboard()
             time.sleep(3)

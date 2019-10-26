@@ -181,7 +181,39 @@ def get_deviceInfos():
   "udid": "5946f3c3d63f7a1455f18f4612c8ff26c9b5f033",
   "normalName": "iPhone6Plus"
 })
-    deviceInfoIPhone6P_lx.append('http://192.168.3.81:4723/wd/hub')
+    deviceInfoIPhone6P_lx.append('http://192.168.3.86:4723/wd/hub')
+
+    deviceInfoMeizu15_lx = []
+    deviceInfoMeizu15_lx.append({
+  "platformName": "Android",
+  "platformVersion": "7.1.1",
+  "deviceName": "881QSDULRVXYQ",
+  "noReset": True,
+  "appPackage": "com.lx.chat",
+  "appWaitPackage": "com.lx.chat",
+  "appActivity": "com.lx.longxin2.main.main.ui.SplashActivity",
+  "newCommandTimeout": 30,
+  "autoGrantPermissions": True,
+  "automationName": "Appium",
+  "normalName": "meizu15"
+})
+    deviceInfoMeizu15_lx.append('http://localhost:4723/wd/hub')
+
+    huaweip20pro = []
+    huaweip20pro.append({
+  "platformName": "Android",
+  "platformVersion": "9.0.0",
+  "deviceName": "AKC7N18316006313",
+  "noReset": True,
+  "appPackage": "com.lx.chat",
+  "appWaitPackage": "com.lx.chat",
+  "appActivity": "com.lx.longxin2.main.main.ui.SplashActivity",
+  "newCommandTimeout": 30,
+  "autoGrantPermissions": True,
+  "automationName": "Appium",
+  "normalName": "meizu15"
+})
+    huaweip20pro.append('http://localhost:4723/wd/hub')
 
 
     #deviceInfoList.append(deviceInfoRedmi6A)
@@ -190,6 +222,7 @@ def get_deviceInfos():
     #deviceInfoList.append(deviceInfoHonor7)
     #deviceInfoList.append(deviceInfoIPhone6P)
     #deviceInfoList.append(deviceInfoRedmi6A_chat)
-    deviceInfoList.append(deviceInfoIPhone6P_lx)
+    deviceInfoList.append(huaweip20pro)
+    #deviceInfoList.append(deviceInfoMeizu15_lx)
 
     return deviceInfoList

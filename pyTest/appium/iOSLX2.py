@@ -91,7 +91,48 @@ class iOSLX2(object):
             time.sleep(3)
             driver.find_element_by_id('RegisteredView_btn_nextBtn').click()
             time.sleep(3)
-            driver.find_element_by_id('register_textfild_codeTextFild').send_keys(util.getRandomString(1, 6))
+            driver.find_element_by_id('register_textfild_codeTextFild').send_keys(util.getRandomString(1, 4))
+            driver.hide_keyboard()
+            time.sleep(3)
+            driver.find_element_by_id('register_textfild_nicknameTextfild').send_keys(phone)
+            driver.hide_keyboard()
+            time.sleep(3)
+
+            #进行密码输入错误的验证
+            #1.输入纯数字密码
+            driver.find_element_by_id('register_textfild_passwordTextfild').send_keys(phone)
+            driver.hide_keyboard()
+            time.sleep(3)
+            driver.find_element_by_id('register_btn_downBtn').click()
+            self.saveScreenNormal(driver, u"输入纯数字密码")
+            time.sleep(3)
+            #2.输入随机密码
+            driver.find_element_by_id('register_textfild_passwordTextfild').clear()
+            password = util.getRandomString(2, 16)
+            driver.find_element_by_id('register_textfild_passwordTextfild').send_keys(password)
+            driver.hide_keyboard()
+            time.sleep(3)
+            driver.find_element_by_id('register_btn_downBtn').click()
+            time.sleep(3)
+            if True:
+                lxLog.getDebugLog()(u'注册成功，号码：' + phone + u',密码：' + password)
+        except Exception as e:
+            print e
+            self.saveScreen(driver, e)
+
+    def test_LostPassword(self, driver):
+        self.myLog(u'test_LostPassword begin')
+        try:
+            self.myLog(u'test_LostPassword 点击 忘记密码')
+            driver.find_element_by_id('login_Btn_LoginchangeBtn').click()
+            time.sleep(3)
+            phone = '13' + util.getRandomString(1, 9)
+            driver.find_element_by_id('RegisteredView_textfild_phoneTextfild').send_keys(phone)
+            driver.hide_keyboard()
+            time.sleep(3)
+            driver.find_element_by_id('RegisteredView_btn_nextBtn').click()
+            time.sleep(3)
+            driver.find_element_by_id('register_textfild_codeTextFild').send_keys(util.getRandomString(1, 4))
             driver.hide_keyboard()
             time.sleep(3)
             driver.find_element_by_id('register_textfild_nicknameTextfild').send_keys(phone)
@@ -139,7 +180,8 @@ class iOSLX2(object):
             self.myLog("程序初始化失败，请检查程序安装和首次调用")
         else:
             self.test_WelcomePage(driver)
-            self.test_Register(driver)
+            #self.test_Register(driver)
+            self.test_LostPassword(driver)
             time.sleep(60)
             self.tearDown(driver)
         self.myLog("Exiting " + self.deviceInfo[0]['normalName'])

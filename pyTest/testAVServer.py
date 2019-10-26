@@ -45,6 +45,7 @@ def getConnections(host, port):
     SeqId = 0
     CmdStatus = 0
     str = struct.pack('!HHHH',TotalLen, CmdId, SeqId, CmdStatus)
+    aaa = len(str)
     #print(str)
 
     #不需要建立连接
