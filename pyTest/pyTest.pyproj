@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>778e93ad-8010-4ce2-8ed6-737f8c1d9ecc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>appLogin.py</StartupFile>
+    <StartupFile>lxRegister.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -35,6 +35,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="compileProtobuf.py" />
+    <Compile Include="lxRegister.py" />
     <Compile Include="pyTest.py" />
     <Compile Include="testAppnium.py">
       <SubType>Code</SubType>
