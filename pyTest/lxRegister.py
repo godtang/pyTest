@@ -46,13 +46,17 @@ class lxRegisterMysql(threading.Thread):   #继承父类threading.Thread
                     exist = True
                     break
                 if False == exist:
-                    sql_query = "INSERT INTO `base_user`.`base_user` SET password = 'f317424473928b0b840b0c9f4ee8f97e'" + ", telephone = '" + phone + "'" + ", resister_come = 1, login_fail_cnt = 0, user_status = 0, reg_time = NOW()"
+                    sql_query = "INSERT INTO `base_user`.`base_user` SET password = 'f317424473928b0b840b0c9f4ee8f97e'"\
+                        ", telephone = '" + phone + "'"\
+                        ", resister_come = 1, login_fail_cnt = 0, user_status = 0, reg_time = NOW()"
                     cursor.execute(sql_query)
             except Exception as err:
                 lxLog.getDebugLog()(u"异常:%s", str(err))
             finally:
                 index = index + 1
         cursor.execute("commit")
+        cursor.execute("insert into base_sync_quee (user_id,telephone,nickname,type,cnt,next_syns_time) "\
+            "select user_id,telephone,telephone,1,0,now() from base_user where telephone like '12399%'")
 
 class lxRegister(threading.Thread):   #继承父类threading.Thread
     def __init__(self, threadID):
@@ -85,7 +89,7 @@ class lxRegister(threading.Thread):   #继承父类threading.Thread
 if __name__ == '__main__':
     threads = []
     index = 0
-    while index < 200:
+    while index < 1:
         # 创建新线程
         thread = lxRegisterMysql(index)
         # 开启新线程

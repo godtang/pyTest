@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>778e93ad-8010-4ce2-8ed6-737f8c1d9ecc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>generateGoFunction.py</StartupFile>
+    <StartupFile>lxRegister.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
