@@ -4,7 +4,7 @@ import os
 
 proto = 'D:/CODE/IM_project/im-comm-proto/src/main/resources/protoc.exe'
 rootDir = 'D:/CODE/IM_project/im-comm-proto/src/main/resources/message'
-outDir = 'D:/CODE/IM_project/im-comm-proto/src/main/resources/go_protobuf'
+outDir = 'D:/CODE/IM_project/im-comm-proto/src/main/resources/python'
 for root, dirs, files in os.walk(rootDir):
 
     # root 表示当前正在访问的文件夹路径
@@ -21,7 +21,7 @@ for root, dirs, files in os.walk(rootDir):
             fobj.write('syntax = "proto2";\npackage go_protobuf;\n')    #写函数
             fobj.write(content)
             fobj.close()'''
-            commond = str.format('{2} -I{3} --go_out={0} {1}', outDir, fileFullPath, proto, root)
+            commond = str.format('{2} -I{3} --python_out={0} {1}', outDir, fileFullPath, proto, root)
             os.system(commond)
 
     # 遍历所有的文件夹

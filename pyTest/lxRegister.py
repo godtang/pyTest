@@ -35,7 +35,7 @@ class lxRegisterMysql(threading.Thread):   #继承父类threading.Thread
         registerDict = {}
         cursor.execute("begin")
         while index < 1000:
-            phone = '12399%03d%03d' % (self.threadID, index)
+            phone = '12380%03d%03d' % (self.threadID, index)
             if index % 100 == 0:
                 lxLog.getDebugLog()(u"处理手机号码：%s", phone)
             try:
@@ -55,8 +55,9 @@ class lxRegisterMysql(threading.Thread):   #继承父类threading.Thread
             finally:
                 index = index + 1
         cursor.execute("commit")
+        phonePrefix = '12380%03d' % (self.threadID)
         cursor.execute("insert into base_sync_quee (user_id,telephone,nickname,type,cnt,next_syns_time) "\
-            "select user_id,telephone,telephone,1,0,now() from base_user where telephone like '12399%'")
+            "select user_id,telephone,telephone,1,0,now() from base_user where telephone like '%s'", phonePrefix)
 
 class lxRegister(threading.Thread):   #继承父类threading.Thread
     def __init__(self, threadID):
@@ -88,8 +89,8 @@ class lxRegister(threading.Thread):   #继承父类threading.Thread
 
 if __name__ == '__main__':
     threads = []
-    index = 0
-    while index < 1:
+    index = 10
+    while index < 20:
         # 创建新线程
         thread = lxRegisterMysql(index)
         # 开启新线程

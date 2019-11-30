@@ -36,6 +36,7 @@
     </Compile>
     <Compile Include="compileProtobuf.py" />
     <Compile Include="generateGoFunction.py" />
+    <Compile Include="lxHeadImage.py" />
     <Compile Include="lxRegister.py" />
     <Compile Include="pyTest.py" />
     <Compile Include="testAppnium.py">
