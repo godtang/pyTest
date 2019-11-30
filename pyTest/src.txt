@@ -1,0 +1,17 @@
+RoomPrivateSet,99907,8015
+RoomNameSet,99907,8016
+RoomDescSet,99907,8027
+RoomNicknameSet,99907,8028
+RoomSetNotice,99907,8017
+RoomAllForbidTalk,99907,8018
+RoomSetForbidMember,99907,8019
+RoomSetInVisibleMember,99907,8021
+RoomSetJoinVerify,99907,8023
+RoomSetDelMemberNotify,99907,8024
+RoomSetAllowPrivateChat,99907,8025
+RoomSetAllowInviteFriend,99907,8026
+SingleChatReadedQuery,99910,9007
+VoiceAndVideoCallAddr,99910,9005
+ChatCancelUpDelivery,99911,9006
+RoomChatCancelUpDelivery,99915,9008
+VVCallUpDelivery,99914,5002
