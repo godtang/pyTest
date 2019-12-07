@@ -94,8 +94,8 @@ class lxHeadImage(threading.Thread):  # 继承父类threading.Thread
 
 if __name__ == '__main__':
     threads = []
-    index = 300
-    while index < 330:
+    index = 0
+    while index < 30:
         # 创建新线程
         thread = lxHeadImage(index)
         # 开启新线程

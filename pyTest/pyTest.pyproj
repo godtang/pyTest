@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>778e93ad-8010-4ce2-8ed6-737f8c1d9ecc</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>lxRegister.py</StartupFile>
+    <StartupFile>lxHeadImage.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="appFollow.py" />
     <Compile Include="appium\androidExample.py" />
     <Compile Include="appium\androidLX2.py" />
     <Compile Include="appium\desired_capabilities.py" />

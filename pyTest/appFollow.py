@@ -15,11 +15,11 @@ sys.path.append('D:/CODE/IM_project/im-comm-proto/src/main/resources/python')
 import LoginTokenAuth_pb2
 import FriendListDetailPush_pb2
 
-loginAddr = 'https://192.168.3.149:12000/sso/v2/loginSimple'
+loginAddr = 'http://121.40.133.91:12000/sso/v2/loginSimple'
 getGateAddr = "http://47.99.117.9:5001/gate/addr/api/getGateAddr"
 md5Salt = 'eccbc87e4b5ce2fe28308fd9f2a7baf312tt390t9874'
-loginName = '13980557094'
-loginPassword = 'Bo3mKqgSr0hYIc7r'
+loginName = '12380003000'
+loginPassword = 'qwer1234'
 
 class APPClient(asyncore.dispatcher):
 
@@ -47,7 +47,7 @@ class APPClient(asyncore.dispatcher):
 
     def writable(self):
         print 'writable'
-        return (len(self.buffer) > 0)
+        return len(self.buffer) > 0
 
     def handle_write(self):
         print 'handle_write'
@@ -89,7 +89,6 @@ class APPClient(asyncore.dispatcher):
         loginTokenAuthRequest.userId = self.userInfo['userId']
         loginTokenAuthRequest.authToken = self.userInfo['authToken']
         loginTokenAuthRequest.devType = 1
-        loginTokenAuthRequest.devBrand = 'vivo'
         try:
             data = loginTokenAuthRequest.SerializeToString()
             sendData = self.appPack(data,99902,1002)
@@ -119,19 +118,6 @@ def login():
         lxLog.getDebugLog()(unicode.format(u"登陆失败，错误代码{0}", loginRecvDict['result']))
         return
 
-    # 寻址
-    '''
-    getGateDict = {}
-    getGateDict['useId'] = loginRecvDict['userId']
-    getGateDict['devType'] = '1'
-    getGateDict['authToken'] = loginRecvDict['authToken']
-    getGateDict['version'] = '0.1'
-    getGateStr = json.dumps(getGateDict)
-    lxLog.getDebugLog()(unicode.format(u'寻址发送数据：{0}', getGateStr))
-    r = requests.post(loginAddr, data=loginStr, verify=False)
-    lxLog.getDebugLog()(r.text)
-    '''
-
     userInfo = {}
     userInfo['userId'] = loginRecvDict['userId']
     userInfo['authToken'] = loginRecvDict['authToken']
@@ -143,27 +129,6 @@ def login():
 
 
 if __name__ == '__main__':
-    '''
-    #注册
-    index = 0
-    registerDict = {}
-    while index < 1:
-        phone = '1239999%04d' % index
-        registerDict['telephone'] = phone
-        registerDict['verifyCode'] = '0000'
-        registerDict['nickname'] = phone
-        registerDict['password'] = 'f317424473928b0b840b0c9f4ee8f97e'
-        registerDict['resisterCome'] = '1'
-        registerStr = json.dumps(registerDict)
-        r = requests.post('https://192.168.3.149:12000/sso/v1/register', data=registerStr, verify=False)
-        #lxLog.getDebugLog()(r.text)
-        loginRecvDict = json.loads(r.text)
-        if '1' != loginRecvDict['result']:
-            lxLog.getDebugLog()(unicode.format(u"注册失败，号码：{1}，错误代码{0}", loginRecvDict['result'], phone))
-        else:
-            lxLog.getDebugLog()(u'注册成功：%s', phone)
-        index = index + 1
-    '''
 
     while True:
         try:
