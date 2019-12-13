@@ -2,15 +2,11 @@
 # !/usr/bin/env python
 
 
-import time
+
 import sys
-import os
-import threading
-import tmjLog as lxLog
-import json
-import requests
 from PIL import Image, ImageDraw, ImageFont
 import random
+import tmjLog as lxLog
 
 _PhonePrefix = 1888801
 _PHoneStart = 0
@@ -19,7 +15,7 @@ _PHoneEnd = 30
 def draw_image(new_img, text, show_image=False):
     text = str(text)
     text1 = text[:5]
-    text2 = text[6:]
+    text2 = text[5:]
     textColor = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
     lineColor = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
     draw = ImageDraw.Draw(new_img)
@@ -59,7 +55,7 @@ def draw_image(new_img, text, show_image=False):
 def new_image(width, height, text='default', color=(100, 100, 100, 255), show_image=False):
     new_img = Image.new('RGBA', (int(width), int(height)), color)
     draw_image(new_img, text, show_image)
-    new_img.save(r'headImage/%s_%s_%s.png' % (width, height, text))
+    new_img.save(r'D:/CODE/pyTest/pyTest/headImage/%s.png' % (text))
     del new_img
 
 
@@ -75,37 +71,17 @@ def new_image_with_file(fn):
                 new_image(*ls)
 
 
-class lxHeadImage(threading.Thread):  # 继承父类threading.Thread
-    def __init__(self, threadID):
-        threading.Thread.__init__(self)
-        self.threadID = threadID
+def createHeadImage(phone):
+    try:
+        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        new_image(300, 300, phone, color=color, show_image=False)
+    except Exception as err:
+        lxLog.getDebugLog()(u"异常:%s", str(err))
 
-    def run(self):
-        index = 0
-        while index < 10:
-            phone = '%07d%03d%01d' % (_PhonePrefix, self.threadID, index)
-            if index % 1 == 0:
-                lxLog.getDebugLog()(u"处理手机号码：%s", phone)
-            try:
-                color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-                new_image(300, 300, phone, color=color, show_image=False)
-            except Exception as err:
-                lxLog.getDebugLog()(u"异常:%s", str(err))
-            finally:
-                index = index + 1
 
 
 if __name__ == '__main__':
-    threads = []
-    index = _PHoneStart
-    while index < _PHoneEnd:
-        # 创建新线程
-        thread = lxHeadImage(index)
-        # 开启新线程
-        thread.start()
-        threads.append(thread)
-        index = index + 1
-    # 等待所有线程完成
-    for t in threads:
-        t.join()
-    print "Exiting Main Thread"
+    if 2 == len(sys.argv):
+        createHeadImage(sys.argv[1])
+    else:
+        pass
