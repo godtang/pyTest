@@ -179,9 +179,67 @@ def im_follows(clientDst, clientSrc):
 
     follows_set.update({"_id": data["_id"]}, data, upsert=True)
 
+def im_friend_tag(clientDst, clientSrc):
+    dbDst = clientDst.lxim
+    tag_set = dbDst.im_friend_tag
+
+    tagId = 0
+    tagName = "tagName"
+    userId = 1
+    createTime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    userIdMap = {}
+
+    data = {}
+    data["tagId"] = tagId
+    data["tagName"] = tagName
+    data["userId"] = userId
+    data["createTime"] = createTime
+    data["userIdMap"] = userIdMap
+
+    tag_set.update({"tagId": data["tagId"]}, data, upsert=True)
+
+def im_room(clientDst, clientSrc):
+    dbDst = clientDst.lxim
+    room_set = dbDst.im_room
+
+    roomId = 11111
+    name = "name"
+    desc = "desc"
+    notice = "notice"
+    userSize = 10
+    createUserId = 1
+    createTime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    isNeedVerify = 1
+    delMemberNotify = 0
+    allowInviteFriend = 0
+    allowPrivateChat = 0
+    isForbidTalk = 0
+    qdCode = "qdCode"
+    isLogicalDel = 0
+
+    data = {}
+    data["roomId"] = roomId
+    data["name"] = name
+    data["desc"] = desc
+    data["notice"] = notice
+    data["userSize"] = userSize
+    data["createUserId"] = createUserId
+    data["createTime"] = createTime
+    data["isNeedVerify"] = isNeedVerify
+    data["delMemberNotify"] = delMemberNotify
+    data["allowInviteFriend"] = allowInviteFriend
+    data["allowPrivateChat"] = allowPrivateChat
+    data["isForbidTalk"] = isForbidTalk
+    data["qdCode"] = qdCode
+    data["isLogicalDel"] = isLogicalDel
+
+    room_set.update({"roomId": data["roomId"]}, data, upsert=True)
+
 if __name__ == '__main__':
     myclientDst = pymongo.MongoClient("mongodb://root:111111@192.168.8.24:27017/")
     myclientSrc = pymongo.MongoClient("mongodb://root:111111@192.168.8.24:27017/")
     im_user(myclientDst, myclientSrc)
     im_friends(myclientDst, myclientSrc)
     im_follows(myclientDst, myclientSrc)
+    im_friend_tag(myclientDst, myclientSrc)
+    im_room(myclientDst, myclientSrc)
