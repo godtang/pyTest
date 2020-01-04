@@ -235,6 +235,59 @@ def im_room(clientDst, clientSrc):
 
     room_set.update({"roomId": data["roomId"]}, data, upsert=True)
 
+def im_room_copy(clientDst, clientSrc):
+    dbDst = clientDst.lxim
+    room_copy_set = dbDst.im_room_copy
+
+    _id = "_id"
+    ownerUserId = "ownerUserId"
+    roomId = "roomId"
+    role = "role"
+    offlineNoPushMsg = "offlineNoPushMsg"
+    isTopChat = "isTopChat"
+    isShowNickName = "isShowNickName"
+    isLogicalDel = "isLogicalDel"
+    logicalDelTime = "logicalDelTime"
+    delReason = "delReason"
+    modifyVersion = "modifyVersion"
+    name = "name"
+    desc = "desc"
+    isForbidTalk = "isForbidTalk"
+    qdCode = "qdCode"
+    createUserId = "createUserId"
+    createTime = "createTime"
+    isNeedVerify = "isNeedVerify"
+    delMemberNotify = "delMemberNotify"
+    allowInviteFriend = "allowInviteFriend"
+    allowPrivateChat = "allowPrivateChat"
+    notice = "notice"
+
+    data = {}
+    data["_id"] = _id
+    data["ownerUserId"] = ownerUserId
+    data["roomId"] = roomId
+    data["role"] = role
+    data["offlineNoPushMsg"] = offlineNoPushMsg
+    data["isTopChat"] = isTopChat
+    data["isShowNickName"] = isShowNickName
+    data["isLogicalDel"] = isLogicalDel
+    data["logicalDelTime"] = logicalDelTime
+    data["delReason"] = delReason
+    data["modifyVersion"] = modifyVersion
+    data["name"] = name
+    data["desc"] = desc
+    data["isForbidTalk"] = isForbidTalk
+    data["qdCode"] = qdCode
+    data["createUserId"] = createUserId
+    data["createTime"] = createTime
+    data["isNeedVerify"] = isNeedVerify
+    data["delMemberNotify"] = delMemberNotify
+    data["allowInviteFriend"] = allowInviteFriend
+    data["allowPrivateChat"] = allowPrivateChat
+    data["notice"] = notice
+
+    room_copy_set.update({"_id": data["_id"]}, data, upsert=True)
+
 if __name__ == '__main__':
     myclientDst = pymongo.MongoClient("mongodb://root:111111@192.168.8.24:27017/")
     myclientSrc = pymongo.MongoClient("mongodb://root:111111@192.168.8.24:27017/")
