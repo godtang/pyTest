@@ -107,10 +107,9 @@ def im_friends(clientDst, clientSrc):
     dbDst = clientDst.lxim
     friends_set = dbDst.im_friends
 
-    _id = 1
-    userId = 1
+    userId = 2
     toUserId = 1
-    toNickname = "toNickname"
+    toNickname = "toNikname"
     createTime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
     logicalDelFlag = "logicalDelFlag"
     isblack = 0
@@ -126,7 +125,6 @@ def im_friends(clientDst, clientSrc):
     modifyVersion = 0
 
     data = {}
-    data["_id"] = _id
     data["userId"] = userId
     data["toUserId"] = toUserId
     data["toNickname"] = toNickname
@@ -144,13 +142,12 @@ def im_friends(clientDst, clientSrc):
     data["remarkPhone"] = remarkPhone
     data["modifyVersion"] = modifyVersion
 
-    friends_set.update({"_id": data["_id"]}, data, upsert=True)
+    friends_set.update({"userId": data["userId"], "toUserId": data["toUserId"]}, data, upsert=True)
 
 def im_follows(clientDst, clientSrc):
     dbDst = clientDst.lxim
     follows_set = dbDst.im_follows
 
-    _id = 1
     userId = 1
     toUserId = 2
     direct = random.randint(1,2)
@@ -164,7 +161,6 @@ def im_follows(clientDst, clientSrc):
     modifyVersion = 0
 
     data = {}
-    data["_id"] = _id
     data["userId"] = userId
     data["toUserId"] = toUserId
     data["direct"] = direct
@@ -177,7 +173,7 @@ def im_follows(clientDst, clientSrc):
     data["offlineNoPushMsg"] = offlineNoPushMsg
     data["modifyVersion"] = modifyVersion
 
-    follows_set.update({"_id": data["_id"]}, data, upsert=True)
+    follows_set.update({"userId": data["userId"], "toUserId": data["toUserId"], "direct": data["direct"]}, data, upsert=True)
 
 def im_friend_tag(clientDst, clientSrc):
     dbDst = clientDst.lxim
@@ -240,26 +236,26 @@ def im_room_copy(clientDst, clientSrc):
     room_copy_set = dbDst.im_room_copy
 
     _id = "_id"
-    ownerUserId = "ownerUserId"
-    roomId = "roomId"
-    role = "role"
-    offlineNoPushMsg = "offlineNoPushMsg"
-    isTopChat = "isTopChat"
-    isShowNickName = "isShowNickName"
-    isLogicalDel = "isLogicalDel"
-    logicalDelTime = "logicalDelTime"
-    delReason = "delReason"
-    modifyVersion = "modifyVersion"
+    ownerUserId = 1
+    roomId = 1
+    role = 3
+    offlineNoPushMsg = 0
+    isTopChat = 0
+    isShowNickName = 0
+    isLogicalDel = 0
+    logicalDelTime = ""
+    delReason = 3
+    modifyVersion = 0
     name = "name"
     desc = "desc"
-    isForbidTalk = "isForbidTalk"
+    isForbidTalk = 0
     qdCode = "qdCode"
-    createUserId = "createUserId"
-    createTime = "createTime"
-    isNeedVerify = "isNeedVerify"
-    delMemberNotify = "delMemberNotify"
-    allowInviteFriend = "allowInviteFriend"
-    allowPrivateChat = "allowPrivateChat"
+    createUserId = 1
+    createTime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    isNeedVerify = 0
+    delMemberNotify = 0
+    allowInviteFriend = 0
+    allowPrivateChat = 0
     notice = "notice"
 
     data = {}
@@ -288,11 +284,71 @@ def im_room_copy(clientDst, clientSrc):
 
     room_copy_set.update({"_id": data["_id"]}, data, upsert=True)
 
+def im_room_member(clientDst, clientSrc):
+    dbDst = clientDst.lxim
+    room_member_set = dbDst.im_room_member
+
+    roomId = "roomId"
+    memberUserId = 1
+    memberId = roomId + '_' + str(memberUserId)
+    role = 3
+    isInVisibleMan = 0
+    inTime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+
+    data = {}
+    data["memberId"] = memberId
+    data["roomId"] = roomId
+    data["memberUserId"] = memberUserId
+    data["role"] = role
+    data["isInVisibleMan"] = isInVisibleMan
+    data["inTime"] = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+
+    room_member_set.update({"memberId": data["memberId"]}, data, upsert=True)
+
+def im_room_member_copy(clientDst, clientSrc):
+    dbDst = clientDst.lxim
+    room_member_copy_set = dbDst.im_room_member_copy
+
+    _id = "_id"
+    memberId = "memberId"
+    memberUserId = 1
+    ownerUserId = 1
+    roomId = 1
+    isLogicalDel = 0
+    logicalDelTime = ""
+    modifyVersion = 0
+    role = 3
+    isInVisibleMan = 0
+    inTime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    isForbidTalk = 0
+    remarkName = "remarkName"
+
+    data = {}
+
+    data["_id"] = _id
+    data["memberId"] = memberId
+    data["memberUserId"] = memberUserId
+    data["ownerUserId"] = ownerUserId
+    data["roomId"] = roomId
+    data["isLogicalDel"] = isLogicalDel
+    data["logicalDelTime"] = logicalDelTime
+    data["modifyVersion"] = modifyVersion
+    data["role"] = role
+    data["isInVisibleMan"] = isInVisibleMan
+    data["inTime"] = inTime
+    data["isForbidTalk"] = isForbidTalk
+    data["remarkName "] = remarkName
+
+    room_member_copy_set.update({"memberId": data["memberId"]}, data, upsert=True)
+
 if __name__ == '__main__':
     myclientDst = pymongo.MongoClient("mongodb://root:111111@192.168.8.24:27017/")
     myclientSrc = pymongo.MongoClient("mongodb://root:111111@192.168.8.24:27017/")
     im_user(myclientDst, myclientSrc)
     im_friends(myclientDst, myclientSrc)
     im_follows(myclientDst, myclientSrc)
-    im_friend_tag(myclientDst, myclientSrc)
+    #im_friend_tag(myclientDst, myclientSrc)
     im_room(myclientDst, myclientSrc)
+    im_room_copy(myclientDst, myclientSrc)
+    im_room_member(myclientDst, myclientSrc)
+    im_room_member_copy(myclientDst, myclientSrc)
