@@ -17,8 +17,8 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 _PhonePrefix = 12345
-_PHoneStart = 1
-_PHoneEnd = 1000
+_PHoneStart = 870
+_PHoneEnd = 871
 
 
 class lxRegisterMysql(threading.Thread):  # 继承父类threading.Thread
@@ -55,7 +55,7 @@ class lxRegisterMysql(threading.Thread):  # 继承父类threading.Thread
                 lxLog.getDebugLog()(u"处理手机号码：%s", phone)
             try:
                 if countZero :
-                    sql_query = "INSERT INTO `base_user`.`base_user` SET password = 'f317424473928b0b840b0c9f4ee8f97e'" \
+                    sql_query = "INSERT INTO `base_user` SET password = 'f317424473928b0b840b0c9f4ee8f97e'" \
                                 ", telephone = '" + phone + "'" \
                                                             ", resister_come = 1, login_fail_cnt = 0, user_status = 0, reg_time = NOW()"
                     cursor.execute(sql_query)
