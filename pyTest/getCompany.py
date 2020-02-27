@@ -137,57 +137,59 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
                 if q.empty():
                     break
                 R.acquire()
-                line = q.get()
+                result = q.get()
                 R.release()
-                print(line)
-                threadFileObj = open('thread' + str(self.threadID) + '.txt', 'w+', encoding='utf-8')
+                print(result)
+                threadFileObj = open('thread' + str(self.threadID) + '.txt', 'a+', encoding='utf-8')
                 try:
-                    line = line.strip()
-                    if len(line) > 0:
-                        result = line.split('\t')
-                        print(line)
-                        corpid = str(result[0])
-                        pageIndex = 1
-                        fitCompany = False
-                        projectInfo = ''
-                        while True:
-                            getProjectListUrl = 'http://gcxm.hunanjs.gov.cn/AjaxHandler/PersonHandler.ashx?method=getProjectList&corpid=' \
-                                                + corpid + '&corptype=0&pageSize=10&pageIndex=' + str(pageIndex)
-                            projectResponse = requests.get(getProjectListUrl)
-                            projectResult = projectResponse.text
-                            j = json.loads(projectResult)
-                            if 0 == j['code']:
-                                if j['data']['total'] > 0:
-                                    queryList = j['data']['list']
-                                    for tempObj in queryList:
-                                        if tempObj['prjname'].find(u'景观') > 0 or \
-                                                tempObj['prjname'].find(u'绿化') > 0:
-                                            print('\t' + tempObj['prjname'])
-                                            getDetailUrl = 'http://gcxm.hunanjs.gov.cn/AjaxHandler/PersonHandler.ashx?method=getProjectDetail&prjid=' \
-                                                           + str(tempObj['prjid'])
-                                            projectDetailResponse = requests.get(getDetailUrl)
-                                            detailResult = projectDetailResponse.text
-                                            jDetail = json.loads(detailResult)
-                                            if 0 == jDetail['code']:
-                                                for tempDetailObj in jDetail['data']['ds1']:
-                                                    if str(tempDetailObj['tendercorpid']) == str(result[0]) \
-                                                            and float(tempDetailObj['tendermoney2']) >= 500.0:
-                                                        fitCompany = True
-                                                        projectInfo = tempObj['prjname'] + '\t' + str(
-                                                            tempDetailObj['tendermoney2'])
-                                                        break
-                                                if fitCompany:
+                    corpid = str(result[0])
+                    pageIndex = 1
+                    fitCompany = False
+                    projectInfo = ''
+                    while True:
+                        getProjectListUrl = 'http://gcxm.hunanjs.gov.cn/AjaxHandler/PersonHandler.ashx?method=getProjectList&corpid=' \
+                                            + corpid + '&corptype=0&pageSize=10&pageIndex=' + str(pageIndex)
+                        projectResponse = requests.get(getProjectListUrl)
+                        projectResult = projectResponse.text
+                        j = json.loads(projectResult)
+                        if 0 == j['code']:
+                            if j['data']['total'] > 0:
+                                queryList = j['data']['list']
+                                for tempObj in queryList:
+                                    if tempObj['prjname'].find(u'景观') > 0 or \
+                                            tempObj['prjname'].find(u'绿化') > 0 or \
+                                            tempObj['prjname'].find(u'公园') > 0 or \
+                                            tempObj['prjname'].find(u'景区') > 0 or \
+                                            tempObj['prjname'].find(u'生态') > 0 or \
+                                            tempObj['prjname'].find(u'文化') > 0 or \
+                                            tempObj['prjname'].find(u'绿地') > 0 or \
+                                            tempObj['prjname'].find(u'环境') > 0:
+                                        print('\t' + tempObj['prjname'])
+                                        getDetailUrl = 'http://gcxm.hunanjs.gov.cn/AjaxHandler/PersonHandler.ashx?method=getProjectDetail&prjid=' \
+                                                       + str(tempObj['prjid'])
+                                        projectDetailResponse = requests.get(getDetailUrl)
+                                        detailResult = projectDetailResponse.text
+                                        jDetail = json.loads(detailResult)
+                                        if 0 == jDetail['code']:
+                                            for tempDetailObj in jDetail['data']['ds1']:
+                                                if str(tempDetailObj['tendercorpid']) == str(result[0]) \
+                                                        and float(tempDetailObj['tendermoney2']) >= 500.0:
+                                                    fitCompany = True
+                                                    projectInfo = tempObj['prjname'] + '\t' + str(
+                                                        tempDetailObj['tendermoney2'])
                                                     break
-                                else:
-                                    break
+                                            if fitCompany:
+                                                break
                             else:
-                                print('error, i\'m quit')
-                                os._exit(0)
-                            pageIndex = pageIndex + 1
-                            if fitCompany or j['data']['pageIndex'] >= j['data']['pages']:
                                 break
-                        if fitCompany:
-                            threadFileObj.write(line + '\t' + projectInfo + '\n')
+                        else:
+                            print('error, i\'m quit')
+                            os._exit(0)
+                        pageIndex = pageIndex + 1
+                        if fitCompany or j['data']['pageIndex'] >= j['data']['pages']:
+                            break
+                    if fitCompany:
+                        threadFileObj.write(result[1] + '\t' + projectInfo + '\n')
                 except Exception as err:
                     print(err)
 
@@ -207,7 +209,7 @@ def getGreaterByThread():
             result = line.split('\t')
             q.put(result)
     threads = []
-    for index in range(1, 10):
+    for index in range(1, 21):
         # 创建新线程
         thread = GetGreaterThread(index)
         # 开启新线程
