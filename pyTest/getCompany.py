@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import datetime
 import json
 import os
+import time
+
 import requests
 import queue
 import threading
@@ -132,6 +135,7 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
         self.threadID = str(threadID)
 
     def run(self):
+        startDate = time.mktime(time.strptime('2017-2-1', '%Y-%m-%d'))
         while True:
             try:
                 if q.empty():
@@ -172,8 +176,11 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
                                         jDetail = json.loads(detailResult)
                                         if 0 == jDetail['code']:
                                             for tempDetailObj in jDetail['data']['ds1']:
+                                                tenderStartDateStr = tempDetailObj['tenderresultdate'].split('T')[0]
+                                                tenderStartDate = time.mktime(time.strptime(tenderStartDateStr, '%Y-%m-%d'))
                                                 if str(tempDetailObj['tendercorpid']) == str(result[0]) \
-                                                        and float(tempDetailObj['tendermoney2']) >= 500.0:
+                                                        and float(tempDetailObj['tendermoney2']) >= 500.0\
+                                                        and tenderStartDate >= startDate:
                                                     fitCompany = True
                                                     projectInfo = tempObj['prjname'] + '\t' + str(
                                                         tempDetailObj['tendermoney2'])
@@ -183,7 +190,7 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
                             else:
                                 break
                         else:
-                            print('error, i\'m quit')
+                            print(str(result) + 'error, i\'m quit|' + projectResult)
                             os._exit(0)
                         pageIndex = pageIndex + 1
                         if fitCompany or j['data']['pageIndex'] >= j['data']['pages']:
