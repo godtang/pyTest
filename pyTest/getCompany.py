@@ -151,7 +151,7 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
                 result = q.get()
                 R.release()
                 print(result)
-                threadFileObj = open('thread' + str(self.threadID) + '.txt', 'a+', encoding='utf-8')
+                #threadFileObj = open('thread' + str(self.threadID) + '.txt', 'a+', encoding='utf-8')
                 try:
                     corpid = str(result[0])
                     pageIndex = 1
@@ -199,12 +199,12 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
                         pageIndex = pageIndex + 1
                         if fitCompany or j['data']['pageIndex'] >= j['data']['pages']:
                             break
-                    if fitCompany:
-                        threadFileObj.write(result[1] + '\t' + projectInfo + '\n')
+                    #if fitCompany:
+                        #threadFileObj.write(result[1] + '\t' + projectInfo + '\n')
                 except Exception as err:
                     lxLog.getDebugLog()(str(err))
 
-                threadFileObj.close()
+                #threadFileObj.close()
             except Exception as e:
                 lxLog.getDebugLog()(str(e))
             finally:
@@ -212,7 +212,7 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
 
 
 def getGreaterByThread():
-    suitableCompanyObj = open(suitableCompany, 'r+', encoding='utf-8')
+    suitableCompanyObj = open(allConstructionOrganization, 'r+', encoding='utf-8')
     lines = suitableCompanyObj.readlines()
     for line in lines:
         line = line.strip()
@@ -220,7 +220,7 @@ def getGreaterByThread():
             result = line.split('\t')
             q.put(result)
     threads = []
-    for index in range(1, 6):
+    for index in range(1, 21):
         # 创建新线程
         thread = GetGreaterThread(index)
         # 开启新线程
@@ -292,6 +292,12 @@ def saveTender(tenderInfo, mysqlCursor):
             for key in tenderInfo.keys():
                 if tenderInfo[key] is None:
                     tenderInfo[key] = 0
+            if 0 == tenderInfo['tenderresultdate']:
+                tenderInfo['tenderresultdate'] = '2099-1-1 0:0:0'
+            if 0 == tenderInfo['createdate']:
+                tenderInfo['createdate'] = '2099-1-1 0:0:0'
+            if 0 == tenderInfo['CheckTime']:
+                tenderInfo['CheckTime'] = '2099-1-1 0:0:0'
             tenderInfo['tenderresultdate'] = str.replace(tenderInfo['tenderresultdate'], 'T', ' ')
             tenderInfo['createdate'] = str.replace(tenderInfo['createdate'], 'T', ' ')
             tenderInfo['CheckTime'] = str.replace(tenderInfo['CheckTime'], 'T', ' ')
@@ -443,8 +449,20 @@ def saveCompany(corpid, companyInfo, mysqlCursor):
 
 
 if __name__ == '__main__':
+    mysqlConfig = {
+        'host': '127.0.0.1',
+        'user': 'root',
+        'password': '111111',
+        'port': 3306,
+        'database': 'tmj',
+        'charset': 'utf8'
+    }
+    mysqlConn = pymysql.connect(**mysqlConfig)
+    mysqlCursor = mysqlConn.cursor()
+    tenderInfo = {'MarginAmount': 0, 'planbdate': 0, 'OutputTax': 0, 'tenderprojectname': 0, 'tendertypename': 0, 'uniontendercorpid1': 0, 'JianAnFee': 0, 'issgdw': '003', 'planedate': 0, 'managedepmark': '同意', 'constructionuseridcard': 0, 'isxzjg': 0, 'projectdate': 0, 'uniontendercorpcode4': 0, 'tendermoney2': 0, 'prjname': 0, 'managedepdate': '2019-12-10T10:00:25.673', 'TBBIDWINNINGNOTICEID': 94, 'tradetypenum': 0, 'tenderprojectcertnum3': 0, 'isnotsgxk': 0, 'area': 0, 'DirectCost': 0, 'DataLevel': 'B', 'bdate': 0, 'SocialInsuranceFee': 0, 'CheckPersonName': '株洲市中标通知书', 'constructionusernum': 0, 'tenderprojectname4': 0, 'prjid': 75345, 'invest': 0, 'prefix': 0, 'Form': 0, 'uniontendercorpid4': 0, 'percent': 0, 'SJZL_serverfilename': 0, 'tenderid': 72839, 'EngineeringEvaluation': 0, 'CheckDepartName': '株洲市住房城乡建设局', 'tenderresultdate': 0, 'AdditionalTax': 0, 'uniontendercorpname4': 0, 'Deadline': 0, 'tendermoney': 0, 'uploaddate': '2019-12-10T09:30:06.423', 'prjnum': '4302912019112791102', 'ProvisionalSum': 0, 'uniontendercorpcode3': 0, 'HWCLAddress': 0, 'supervisoridcard': 0, 'WinningAmount': 0, 'createdate': '2019-12-10T09:30:01.853', 'tenderprojectcertnum4': 0, 'tenderclassname': 0, 'BiaoDuanid': 6329, 'BIMSpecialCost': 0, 'iszl': 0, 'managedepnum': 430291, 'designusername': 0, 'projectusername': 0, 'tendercorpcode': 0, 'issqbg': 0, 'tendercorpname': 0, 'techusercertnum': 0, 'WinningBidRange': 0, 'tenderurl': 0, 'agencycorpcode': 0, 'COSTS_AND_PROFITS': 0, 'tenderprojectidcard2': 0, 'percent3': 0, 'managedepstatusnum': 301, 'supervisornum': 0, 'BuildLinkPhone': 0, 'tenderprojectcertnum': 0, 'tenderprojectidcard3': 0, 'supervisorname': 0, 'BXPLANID': 0, 'percent1': 0, 'isimport': 0, 'kbaddress': 0, 'countynum': 430291, 'SafetyCivilizationFee': 0, 'KBCORPNAME': 0, 'datelimit': 0, 'RowGuid': 0, 'prjsize': 0, 'tendercorpid': 0, 'sortnum': 0, 'designusercertnum': 0, 'mark': 0, 'uniontendercorpid3': 0, 'fwzq': 0, 'designuseridcard': 0, 'tenderprojectname2': 0, 'tenderprojectname3': 0, 'bubaocorpid': 0, 'tendernum': '招2019-011号', 'TENDERGSID': 0, 'zbggurl': 0, 'period': 0, 'BuildLinkMan': 0, 'tenderclassnum': 0, 'tenderprojectidcard': 0, 'isbubao': 0, 'SJZL_filename': 0, 'constructionusername': 0, 'BuildCorpName': 0, 'qualityIndicator': 0, 'BID_SECTION_CODE': 0, 'tendertypenum': 0, 'techuseridcard': 0, 'outkey': 0, 'termination': 0, 'importdate': 0, 'isupload': 1, 'managedepnumusername': '云龙示范区中标通知书', 'techusername': 0, 'supervisionusernum': 0, 'uniontendercorpname2': 0, 'TENDER_PROJECT_CODE': 0, 'uniontendercorpcode1': 0, 'printprjsize': 0, 'citynum': 430200, 'bxid': 0, 'Rate': 0, 'edate': 0, 'TENDERRESULTID': 0, 'Basecost': 0, 'agencycorpid': 0, 'uniontendercorpid2': 0, 'uniontendercorpname1': 0, 'uniontendercorpname3': 0, 'OTHER_PROJECT_COSTS': 0, 'Fees': 0, 'tenderprojectidcard4': 0, 'uniontendercorpcode2': 0, 'supervisionuseridcard': 0, 'statusnum': 304, 'HWCLProcurementMethods': 0, 'percent2': 0, 'overview': 0, 'tradeboundnum': 0, 'oldid': 0, 'agencycorpname': 0, 'CheckTime': '2019-12-12T16:11:27.727', 'DataSource': 0, 'ISXYPJ': 0, 'IsUnion': 0, 'tenderprojectcertnum2': 0, 'HWCLPhone': 0, 'supervisionusername': 0, 'projectmark': 0}
+    saveTender(tenderInfo, mysqlCursor)
     # getCompany()
     # getSuitableCompany()
     # getGreaterThan500()
-    # getGreaterByThread()
-    getCompanyByThread()
+    getGreaterByThread()
+    #getCompanyByThread()
