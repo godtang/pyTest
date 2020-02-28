@@ -117,7 +117,7 @@ def getGreaterThan500():
                 if fitCompany:
                     greaterThan500Obj.write(line + '\t' + projectInfo + '\n')
         except Exception as err:
-            lxLog.getDebugLog(str(err))
+            lxLog.getDebugLog()(str(err))
 
     suitableCompanyObj.close()
     greaterThan500Obj.close()
@@ -202,11 +202,11 @@ class GetGreaterThread(threading.Thread):  # 继承父类threading.Thread
                     if fitCompany:
                         threadFileObj.write(result[1] + '\t' + projectInfo + '\n')
                 except Exception as err:
-                    lxLog.getDebugLog(str(err))
+                    lxLog.getDebugLog()(str(err))
 
                 threadFileObj.close()
             except Exception as e:
-                lxLog.getDebugLog(str(e))
+                lxLog.getDebugLog()(str(e))
             finally:
                 pass
 
@@ -220,7 +220,7 @@ def getGreaterByThread():
             result = line.split('\t')
             q.put(result)
     threads = []
-    for index in range(1, 11):
+    for index in range(1, 6):
         # 创建新线程
         thread = GetGreaterThread(index)
         # 开启新线程
@@ -275,7 +275,7 @@ def saveProject(projectInfo, mysqlCursor):
             mysqlCursor.execute(insertSql)
             mysqlCursor.execute('commit')
     except Exception as e:
-        lxLog.getDebugLog(str(e))
+        lxLog.getDebugLog()(str(e))
         lxLog.getDebugLog()(u"数据库执行异常:%s", str(projectInfo))
 
 
@@ -322,9 +322,8 @@ def saveTender(tenderInfo, mysqlCursor):
             mysqlCursor.execute(insertSql)
             mysqlCursor.execute('commit')
     except Exception as e:
-        lxLog.getDebugLog(str(e))
+        lxLog.getDebugLog()(str(e))
         lxLog.getDebugLog()(u"数据库执行异常:%s", str(tenderInfo))
-
 
 
 def getCompanyByThread():
@@ -336,7 +335,7 @@ def getCompanyByThread():
             result = line.split('\t')
             q.put(result)
     threads = []
-    for index in range(1, 2):
+    for index in range(1, 11):
         # 创建新线程
         thread = GetCompanyThread(index)
         # 开启新线程
@@ -365,6 +364,7 @@ class GetCompanyThread(threading.Thread):  # 继承父类threading.Thread
         mysqlConn = pymysql.connect(**mysqlConfig)
         mysqlCursor = mysqlConn.cursor()
         while True:
+            logInfo = ""
             try:
                 if q.empty():
                     break
@@ -373,6 +373,7 @@ class GetCompanyThread(threading.Thread):  # 继承父类threading.Thread
                 R.release()
                 print(result)
                 corpid = str(result[0])
+                logInfo = corpid
                 detailUrl = 'http://gcxm.hunanjs.gov.cn/AjaxHandler/PersonHandler.ashx?method=getCorpDetail&corpid=' + corpid + '&isout='
                 response = requests.get(detailUrl)
                 j = json.loads(response.text)
@@ -380,10 +381,11 @@ class GetCompanyThread(threading.Thread):  # 继承父类threading.Thread
                     saveCompany(corpid, j, mysqlCursor)
 
             except Exception as e:
-                lxLog.getDebugLog(str(e))
-                lxLog.getDebugLog()(u"corpid:%s", corpid)
+                lxLog.getDebugLog()(str(e))
+                lxLog.getDebugLog()(logInfo)
             finally:
                 pass
+
 
 def saveCompany(corpid, companyInfo, mysqlCursor):
     querySql = "select * from company where corpid = {}".format(corpid)
@@ -405,11 +407,13 @@ def saveCompany(corpid, companyInfo, mysqlCursor):
                     ", county = '" + companyObj['county'] + "'" + \
                     ", corpcode = '" + companyObj['corpcode'] + "'" + \
                     ", address = '" + companyObj['address'] + "'" + \
-                    ", econtypename = '" + companyObj['econtypename']+ "'"
+                    ", econtypename = '" + companyObj['econtypename'] + "'"
         mysqlCursor.execute(insertSql)
         qualificationList = companyInfo['data']['ds1']
         for qualificationObj in qualificationList:
-            querySql = "select * from companyqualification where corpid = {} and mark = ''".format(corpid, qualificationObj['mark'])
+            querySql = "select * from companyqualification where corpid = {} and mark = ''".format(corpid,
+                                                                                                   qualificationObj[
+                                                                                                       'mark'])
             mysqlCursor.execute(querySql)
             temp = None
             for tempResult in mysqlCursor:
@@ -420,20 +424,23 @@ def saveCompany(corpid, companyInfo, mysqlCursor):
                 for key in qualificationObj.keys():
                     if qualificationObj[key] is None:
                         qualificationObj[key] = ""
-                tenderInfo['organdate'] = str.replace(tenderInfo['organdate'], 'T', ' ')
-                tenderInfo['enddate'] = str.replace(tenderInfo['enddate'], 'T', ' ')
+                        if "organdate" == key or "enddate" == key:
+                            qualificationObj[key] = "2099-11-11 00:00:00"
+                qualificationObj['organdate'] = str.replace(qualificationObj['organdate'], 'T', ' ')
+                qualificationObj['enddate'] = str.replace(qualificationObj['enddate'], 'T', ' ')
                 insertSql = "insert into companyqualification set " + \
                             "corpid = " + str(corpid) + \
-                            ", certtypenum = " + str(qualificationObj['certtypenum'])  + \
+                            ", certtypenum = " + str(qualificationObj['certtypenum']) + \
                             ", certnum = " + str(qualificationObj['certnum']) + \
                             ", aptitudekindname = '" + qualificationObj['aptitudekindname'] + "'" + \
                             ", certid = '" + qualificationObj['certid'] + "'" + \
                             ", organdate = '" + qualificationObj['organdate'] + "'" + \
                             ", organname = '" + qualificationObj['organname'] + "'" + \
                             ", enddate = '" + qualificationObj['enddate'] + "'" + \
-                            ", mark = '" + qualificationObj['mark']+ "'"
+                            ", mark = '" + qualificationObj['mark'] + "'"
                 mysqlCursor.execute(insertSql)
         mysqlCursor.execute('commit')
+
 
 if __name__ == '__main__':
     # getCompany()
