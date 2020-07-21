@@ -22,55 +22,145 @@ headers = {
 
 
 def admin_queryUser():
-    try:
-        registerDict = {}
-        registerDict['acctName'] = ""
-        registerDict['telephone'] = ''
-        registerDict['toPageNum'] = 1
-        registerDict['pageSize'] = 20
-        registerStr = json.dumps(registerDict)
-        r = requests.post('http://127.0.0.1:8080/admin/queryUser', headers=headers, data=registerStr, verify=False)
-        # lxLog.getDebugLog()(r.text)
-        loginRecvDict = json.loads(r.text)
-        if '1' != loginRecvDict['result']:
-            lxLog.getDebugLog()(unicode.format(u"注册失败，号码：{1}，错误代码{0}", loginRecvDict['result'], phone))
-        else:
-            lxLog.getDebugLog()(u'注册成功：%s', phone)
-    except Exception as err:
-        lxLog.getDebugLog()(u"异常:%s", str(err))
+    result = []
+    retObj = {}
+    retObj['acctName'] = ""
+    retObj['telephone'] = ''
+    retObj['pageNum'] = 1
+    retObj['pageSize'] = 20
+    result.append(retObj)
+    result.append('http://127.0.0.1:21012/admin/queryUser')
+    return result
 
 
 def opt_queryAccount():
-    try:
-        registerDict = {}
-        registerDict['acctName'] = ""
-        registerDict['telephone'] = ""
-        registerDict['toPageNum'] = 1
-        registerDict['pageSize'] = 20
-        registerStr = json.dumps(registerDict)
-        r = requests.post('http://127.0.0.1:21012/opt/queryAccount', headers=headers, data=registerStr, verify=False)
-        lxLog.getDebugLog()(r.text)
-
-    except Exception as err:
-        lxLog.getDebugLog()(u"异常:%s", str(err))
+    result = []
+    retObj = {}
+    retObj['acctName'] = ""
+    retObj['telephone'] = ""
+    retObj['pageNum'] = 1
+    retObj['pageSize'] = 20
+    result.append(retObj)
+    result.append('http://127.0.0.1:21012/opt/queryAccount')
+    return result
 
 
 def opt_queryBill():
+    result = []
+    retObj = {}
+    retObj['acctName'] = ""
+    retObj['type'] = ""
+    retObj['date'] = ""
+    retObj['telephone'] = "13"
+    retObj['pageNum'] = 1
+    retObj['pageSize'] = 20
+    result.append(retObj)
+    result.append('http://127.0.0.1:21012/opt/queryBill')
+    return result
+
+
+def opt_queryFundRecord():
+    result = []
+    retObj = {}
+    retObj['acctName'] = ""
+    retObj['type'] = ""
+    retObj['date'] = ""
+    retObj['telephone'] = ""
+    retObj['pageNum'] = 1
+    retObj['pageSize'] = 20
+    result.append(retObj)
+    result.append('http://127.0.0.1:21012/opt/queryFundRecord')
+    return result
+
+def opt_vendorStatistics():
+    result = []
+    retObj = {}
+    retObj['acctName'] = ""
+    retObj['acctId'] = ""
+    retObj['startDate'] = "2020-07-20"
+    retObj['endDate'] = "2020-07-20"
+    retObj['type'] = "2"
+    retObj['pageNum'] = 1
+    retObj['pageSize'] = 20
+    result.append(retObj)
+    result.append('http://127.0.0.1:21012/opt/vendorStatistics')
+    return result
+
+def acct_queryBalance():
+    result = []
+    retObj = {}
+    retObj['baseUserId'] = "1"
+    result.append(retObj)
+    result.append('http://127.0.0.1:21010/acct/queryBalance')
+    return result
+
+def acct_queryBillList():
+    result = []
+    retObj = {}
+    retObj['baseUserId'] = "1"
+    retObj['yearAndMonth'] = "2020-07"
+    retObj['billTypeCode'] = ""
+    retObj['pageNum'] = 1
+    retObj['pageSize'] = 20
+    result.append(retObj)
+    result.append('http://127.0.0.1:21010/acct/queryBillList')
+    return result
+
+def acct_queryBillDetail():
+    result = []
+    retObj = {}
+    retObj['baseUserId'] = "1"
+    retObj['billId'] = "1"
+    result.append(retObj)
+    result.append('http://127.0.0.1:21010/acct/queryBillDetail')
+    return result
+
+def acct_queryMBillStatistics():
+    result = []
+    retObj = {}
+    retObj['baseUserId'] = "1"
+    retObj['yearAndMonth'] = "2020-07"
+    retObj['direct'] = "0"
+    retObj['pageNum'] = 1
+    retObj['pageSize'] = 20
+    result.append(retObj)
+    result.append('http://127.0.0.1:21010/acct/queryMBillStatistics')
+    return result
+
+def acct_queryYBillStatistics():
+    result = []
+    retObj = {}
+    retObj['baseUserId'] = "1"
+    retObj['year'] = "2020"
+    retObj['direct'] = "0"
+    result.append(retObj)
+    result.append('http://127.0.0.1:21010/acct/queryYBillStatistics')
+    return result
+
+def acct_modifyPayPassword():
+    result = []
+    retObj = {}
+    retObj['acctId'] = "1"
+    retObj['oldPayPwd'] = "11111asdfasd0"
+    retObj['payPwd'] = "111111"
+    result.append(retObj)
+    result.append('http://127.0.0.1:21010/acct/modifyPayPassword')
+    return result
+
+def acct_queryBillType():
+    result = []
+    retObj = {}
+    result.append(retObj)
+    result.append('http://127.0.0.1:21010/acct/queryBillType')
+    return result
+
+
+if __name__ == '__main__':
     try:
-        registerDict = {}
-        registerDict['acctName'] = ""
-        registerDict['type'] = ""
-        registerDict['date'] = ""
-        registerDict['telephone'] = ""
-        registerDict['toPageNum'] = 1
-        registerDict['pageSize'] = 20
-        registerStr = json.dumps(registerDict)
-        r = requests.post('http://127.0.0.1:21012/opt/queryBill', headers=headers, data=registerStr, verify=False)
+        result = acct_queryYBillStatistics()
+        postStr = json.dumps(result[0])
+        r = requests.post(result[1], headers=headers, data=postStr, verify=False)
         lxLog.getDebugLog()(r.text)
 
     except Exception as err:
         lxLog.getDebugLog()(u"异常:%s", str(err))
-
-
-if __name__ == '__main__':
-    opt_queryBill()
