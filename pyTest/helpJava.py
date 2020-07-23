@@ -11,18 +11,12 @@ import json
 import requests
 
 
-def fieldAddFormat():
-    f = open('D:/work/0723/field.txt', 'r')
-    dstStr = ""
-    for lines in f.readlines():
-        lines = lines.strip();
-        dstStr = dstStr + lines + "=#{" + lines + "},"
-    print(dstStr)
 
 
 def renameType():
-    typeDic = {"int": "Integer", "varchar": "String", "tinyint":"Integer","datetime":"String"}
+    typeDic = {"int": "Integer", "varchar": "String", "tinyint":"Integer","datetime":"String","decimal":"Double"}
     f = open('D:/work/0723/type.txt', 'r')
+    dstSqlStr = ""
     for lines in f.readlines():
         line = lines.split("\t")
         dstStr = "private "
@@ -39,7 +33,9 @@ def renameType():
                 newField = newField + oldField[index+1].upper()
                 index = index + 2
         comment = line[0].strip()
+        dstSqlStr = dstSqlStr + oldField + "=#{" + newField + "},"
         print(dstStr + newType + ' ' + newField + ';//' + comment)
+    print(dstSqlStr)
 
 
 if __name__ == '__main__':
