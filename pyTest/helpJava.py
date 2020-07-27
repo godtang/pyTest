@@ -11,10 +11,23 @@ import json
 import requests
 
 
+def fieldToStr():
+    f = open('D:/work/0723/field.txt', 'r')
+    dstSqlStr = ""
+    for lines in f.readlines():
+        lines = lines.strip()
+        dstSqlStr = dstSqlStr + '"' + lines + '",'
+    print(dstSqlStr)
 
 
 def renameType():
-    typeDic = {"int": "Integer", "varchar": "String", "tinyint":"Integer","datetime":"String","decimal":"Double"}
+    typeDic = {"int": "Integer",
+               "varchar": "String",
+               "tinyint": "Integer",
+               "datetime": "String",
+               "decimal": "Double",
+               "date": "String",
+               "smallint": "Integer"}
     f = open('D:/work/0723/type.txt', 'r')
     dstSqlStr = ""
     for lines in f.readlines():
@@ -30,7 +43,7 @@ def renameType():
                 newField = newField + oldField[index]
                 index = index + 1
             else:
-                newField = newField + oldField[index+1].upper()
+                newField = newField + oldField[index + 1].upper()
                 index = index + 2
         comment = line[0].strip()
         dstSqlStr = dstSqlStr + oldField + "=#{" + newField + "},"
@@ -40,7 +53,7 @@ def renameType():
 
 if __name__ == '__main__':
     try:
-        renameType()
+        fieldToStr()
 
     except Exception as err:
         lxLog.getDebugLog()(u"异常:%s", str(err))
