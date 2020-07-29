@@ -30,6 +30,7 @@ def renameType():
                "smallint": "Integer"}
     f = open('D:/work/0723/type.txt', 'r')
     dstSqlStr = ""
+    dstRequiredStr = ""
     for lines in f.readlines():
         line = lines.split("\t")
         dstStr = "private "
@@ -47,13 +48,15 @@ def renameType():
                 index = index + 2
         comment = line[0].strip()
         dstSqlStr = dstSqlStr + oldField + "=#{" + newField + "},"
+        dstRequiredStr = dstRequiredStr + '"' + newField + '",'
         print(dstStr + newType + ' ' + newField + ';//' + comment)
     print(dstSqlStr)
+    print(dstRequiredStr)
 
 
 if __name__ == '__main__':
     try:
-        fieldToStr()
+        renameType()
 
     except Exception as err:
         lxLog.getDebugLog()(u"异常:%s", str(err))
