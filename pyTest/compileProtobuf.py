@@ -2,9 +2,9 @@
 
 import os
 
-proto = 'D:/CODE/IM_project/im-comm-proto/src/main/resources/protoc.exe'
-rootDir = 'D:/CODE/IM_project/im-comm-proto/src/main/resources/message'
-outDir = 'D:/CODE/IM_project/im-comm-proto/src/main/resources/go_protobuf'
+proto = 'D:/CODE/JAVA/IM_project/im-comm-proto/src/main/resources/protoc.exe'
+rootDir = 'D:/CODE/JAVA/IM_project/im-comm-proto/src/main/resources/message'
+outDir = 'D:/CODE/JAVA/IM_project/im-comm-proto/src/main/resources/cpp'
 for root, dirs, files in os.walk(rootDir):
 
     # root 表示当前正在访问的文件夹路径
@@ -15,17 +15,17 @@ for root, dirs, files in os.walk(rootDir):
     for f in files:
         if '.proto' == f[-6:]:
             fileFullPath = os.path.join(root, f)
-            fobj = open(fileFullPath,'r+')     #wt：可写入操作方式/at为在原有的文件内容追加写入
-            content = fobj.read(1024*1024)
+            fobj = open(fileFullPath, 'r+', encoding='utf-8')  # wt：可写入操作方式/at为在原有的文件内容追加写入
+            content = fobj.read(1024 * 1024)
             fobj.seek(0)
-            fobj.write('syntax = "proto2";\npackage go_protobuf;\n')    #写函数
+            fobj.write('package lx_protobuf;\n')  # 写函数
             fobj.write(content)
             fobj.close()
 
     # 遍历所有的文件夹
     for d in dirs:
         pass
-        #print(os.path.join(root, d))
+        # print(os.path.join(root, d))
 
 for root, dirs, files in os.walk(rootDir):
 
@@ -37,11 +37,10 @@ for root, dirs, files in os.walk(rootDir):
     for f in files:
         if '.proto' == f[-6:]:
             fileFullPath = os.path.join(root, f)
-            commond = str.format('{2} -I{3} --go_out={0} {1}', outDir, fileFullPath, proto, root)
-            os.system(commond)
+            command = str.format('{2} -I{3} --cpp_out={0} {1}', outDir, fileFullPath, proto, root)
+            os.system(command)
 
     # 遍历所有的文件夹
     for d in dirs:
         pass
-        #print(os.path.join(root, d))
-
+        # print(os.path.join(root, d))

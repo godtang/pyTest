@@ -25,9 +25,10 @@ def renameType():
                "varchar": "String",
                "tinyint": "Integer",
                "datetime": "String",
-               "decimal": "Double",
+               "decimal": "BigDecimal",
                "date": "String",
-               "smallint": "Integer"}
+               "smallint": "Integer",
+               "bigint": "Long"}
     f = open('D:/work/0723/type.txt', 'r')
     dstSqlStr = ""
     dstRequiredStr = ""

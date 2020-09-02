@@ -17,8 +17,8 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 _PhonePrefix = 12345
-_PHoneStart = 870
-_PHoneEnd = 871
+_PHoneStart = 0
+_PHoneEnd = 10
 
 
 class lxRegisterMysql(threading.Thread):  # 继承父类threading.Thread
@@ -32,7 +32,7 @@ class lxRegisterMysql(threading.Thread):  # 继承父类threading.Thread
             'user': 'root',
             'password': '@lxkjim20191011',
             'port': 3306,
-            'database': 'base_user',
+            'database': 'test_base_user',
             'charset': 'utf8'
         }
         conn = mysql.connector.connect(**config)
@@ -101,7 +101,7 @@ class lxRegister(threading.Thread):  # 继承父类threading.Thread
             registerDict['resisterCome'] = '1'
             registerStr = json.dumps(registerDict)
             try:
-                r = requests.post('http://121.41.16.130:12000/sso/v1/register', data=registerStr, verify=False)
+                r = requests.post('https://sso.im.test.bolod.xin:19000/sso/v1/register', data=registerStr, verify=False)
                 # lxLog.getDebugLog()(r.text)
                 loginRecvDict = json.loads(r.text)
                 if '1' != loginRecvDict['result']:
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     index = _PHoneStart
     while index < _PHoneEnd:
         # 创建新线程
-        thread = lxRegisterMysql(index)
+        thread = lxRegister(index)
         # 开启新线程
         thread.start()
         threads.append(thread)
@@ -129,4 +129,4 @@ if __name__ == '__main__':
     # 等待所有线程完成
     for t in threads:
         t.join()
-    print "Exiting Main Thread"
+    print("Exiting Main Thread")
